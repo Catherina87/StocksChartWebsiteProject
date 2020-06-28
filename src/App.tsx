@@ -1,11 +1,14 @@
 import React from 'react';
-import { Navbar } from './components/Navbar';
+import { CustomNavbar } from './components/CustomNavbar';
+import { StockForm } from './components/StockForm';
 
-const App: React.FC = () => {
+const App = () => {
   return <>
-    <Navbar />
+    <CustomNavbar />
     <div className="container">
-      <h1>Test</h1>
+      
+      <StockForm />
+
     </div>
   </>
 }
