@@ -10,20 +10,23 @@ const App = () => {
     {
       id: 1234567,
       tiker: "AAPL",
-      buyPrice: "250",
-      numShares: "10"
+      buyPrice: 250,
+      numShares: 10,
+      sector: "Tech"
     },
     {
       id: 12345678,
       tiker: "GOOG",
-      buyPrice: "400",
-      numShares: "20"
+      buyPrice: 400,
+      numShares: 20,
+      sector: "Tech"
     },
     {
       id: 123456789,
       tiker: "MSFT",
-      buyPrice: "100",
-      numShares: "5"
+      buyPrice: 100.99,
+      numShares: 5,
+      sector: "Tech"
     }
   ]
 
@@ -34,7 +37,8 @@ const App = () => {
       id: Date.now(),
       tiker: stock.tiker,
       buyPrice: stock.buyPrice,
-      numShares: stock.numShares
+      numShares: stock.numShares,
+      sector: stock.sector
     }
 
     console.log("In addStock");

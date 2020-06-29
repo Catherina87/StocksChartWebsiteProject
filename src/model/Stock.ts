@@ -1,6 +1,7 @@
 export default interface Stock {
   id: number
   tiker: string
-  buyPrice: string
-  numShares: string
+  buyPrice: number
+  numShares: number
+  sector: string
 }

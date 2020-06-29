@@ -6,8 +6,9 @@ import Stock from '../model/Stock';
 export const StockForm = (props) => {
 
   const [tiker, setTiker] = useState('');
-  const [buyPrice, setBuyPrice] = useState('');
-  const [numShares, setNumShares] = useState('');
+  const [buyPrice, setBuyPrice] = useState(0);
+  const [numShares, setNumShares] = useState(0);
+  const [sector, setSector] = useState('');
 
   const tikerHandler = (event) => {
     setTiker(event.target.value)
@@ -21,6 +22,10 @@ export const StockForm = (props) => {
     setNumShares(event.target.value)
   }
 
+  const sectorHandler = (event) => {
+    setSector(event.target.value)
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     
@@ -28,7 +33,8 @@ export const StockForm = (props) => {
       id: Date.now(),
       tiker: tiker,
       buyPrice: buyPrice,
-      numShares: numShares
+      numShares: numShares,
+      sector: sector
     }
 
     console.log(newStock);
@@ -70,7 +76,7 @@ export const StockForm = (props) => {
 
       <Form.Group controlId="formSelectIndustrySector">
         <Form.Label>Select Industry Sector</Form.Label>
-        <Form.Control as="select" multiple>
+        <Form.Control onChange={sectorHandler} as="select" multiple>
           <option>Real Estate</option>
           <option>Bonds</option>
           <option>Finance</option>
