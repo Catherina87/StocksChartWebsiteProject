@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
+import { StocksList } from './components/StocksList';
 import Stock from './model/Stock';
 
 const App = () => {
@@ -25,7 +26,7 @@ const App = () => {
     <div className="container">
       <StockForm onAdd={addStock}/>
 
-      {/* <StocksList stocksList={stocksList} /> */}
+      <StocksList stocksList={stocksList} />
 
     </div>
   </>
