@@ -46,12 +46,16 @@ const App = () => {
     setStocksList(prev => [newStock, ...prev])
   }
 
+  const removeStock = (id: number) => {
+    setStocksList(prev => prev.filter(stockItem => stockItem.id !== id));
+  }
+
   return <>
     <CustomNavbar />
     <div className="container">
       <StockForm onAdd={addStock}/>
 
-      <StocksList stocksList={stocksList} />
+      <StocksList stocksList={stocksList} onRemove={removeStock}/>
 
     </div>
   </>
