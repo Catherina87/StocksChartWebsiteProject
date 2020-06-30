@@ -1,5 +1,7 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/ListGroup';
+import Stock from '../model/Stock';
+import { Link } from 'react-router-dom';
 
 export const StocksList = ({ stocksList, onRemove }) => {
   if (stocksList.length === 0) {
@@ -9,7 +11,7 @@ export const StocksList = ({ stocksList, onRemove }) => {
     <ListGroup className="mt2">
       {stocksList.map(stockItem => {
         return (
-          <ListGroup.Item>{stockItem.tiker} 
+          <ListGroup.Item> <Link to={`/list/${stockItem['id']}`}>{stockItem.tiker} </Link>
             <button 
               type="submit" 
               className="btn btn-outline-primary ml2"

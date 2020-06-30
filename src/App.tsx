@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
 import { StocksList } from './components/StocksList';
+import { Test } from './components/Test'; // Remove later
+import { TestDetail } from './components/TestDetail'; // Remove later
 import Stock from './model/Stock';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { StockDetail } from './components/StockDetail';
 
 const App = () => {
 
@@ -51,14 +55,28 @@ const App = () => {
   }
 
   return <>
-    <CustomNavbar />
-    <div className="container">
-      <StockForm onAdd={addStock}/>
-
-      <StocksList stocksList={stocksList} onRemove={removeStock}/>
-
-    </div>
+    <Router>
+      <CustomNavbar />
+      <Switch>
+        <div className="container">
+          <Route path="/" exact render={() => <Home />} />
+          <Route path="/add" render={() => <StockForm onAdd={addStock} />} />
+          <Route path="/list" exact render={() => <StocksList stocksList={stocksList}  onRemove={removeStock} />} />
+          <Route path="/test" exact render={() => <Test />} />
+          <Route path="/test/:id" component={TestDetail} />
+          <Route path="/list/:id" component={StockDetail} />
+        </div>
+      </Switch>
+    </Router>
+    
   </>
 }
+
+
+const Home = () => (
+  <div>
+    <h1>Home Page</h1>
+  </div>
+);
 
 export default App;
