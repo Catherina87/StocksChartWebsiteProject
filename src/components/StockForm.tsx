@@ -28,9 +28,9 @@ export const StockForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     const newStock: Stock = {
-      id: Date.now(),
+      id: Date.now(), // maybe won't need it when I save to DB.
       tiker: tiker,
       buyPrice: buyPrice,
       numShares: numShares,
@@ -46,37 +46,45 @@ export const StockForm = (props) => {
     <Form className="mt2" onSubmit={handleSubmit}>
       <Form.Group controlId="formStockTiker">
         <Form.Label>Stock Ticker</Form.Label>
-        <Form.Control 
+        <Form.Control
+          required
           onChange={tikerHandler}
           value={tiker}
-          type="tiker" 
+          type="string"
           placeholder="Stock Ticker"
         />
       </Form.Group>
 
       <Form.Group controlId="formBuyPrice">
         <Form.Label>Buy Price</Form.Label>
-        <Form.Control 
+        <Form.Control
+          required
+          min={1}
           onChange={buyPriceHandler}
-          value={buyPrice}
-          type="price" 
+          type="number"
           placeholder="Buy Price"
         />
       </Form.Group>
 
       <Form.Group controlId="formNumShare">
         <Form.Label>Number of Shares</Form.Label>
-        <Form.Control 
+        <Form.Control
+          required
+          min={1}
           onChange={numSharesHandler}
-          value={numShares}
-          type="numShares" 
-          placeholder="Number of Shares" 
+          type="number"
+          placeholder="Number of Shares"
         />
       </Form.Group>
 
       <Form.Group controlId="formSelectIndustrySector">
         <Form.Label>Select Industry Sector</Form.Label>
-        <Form.Control onChange={sectorHandler} as="select" multiple>
+        <Form.Control
+          required
+          onChange={sectorHandler}
+          as="select"
+          multiple
+        >
           <option>Real Estate</option>
           <option>Bonds</option>
           <option>Finance</option>
