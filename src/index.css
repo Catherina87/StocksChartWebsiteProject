@@ -24,3 +24,8 @@ code {
 .ml2 {
   margin-left: 2rem;
 }
+
+.category-item {
+  display: flex;
+  justify-content: space-between;
+}
