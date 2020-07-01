@@ -8,6 +8,7 @@ import Stock from './model/Stock';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { StockDetail } from './components/StockDetail';
 import { Home } from './components/Home';
+import { FilteredStocks } from './components/FilteredStocks';
 
 const App = () => {
 
@@ -32,6 +33,13 @@ const App = () => {
       buyPrice: 100.99,
       numShares: 5,
       sector: "Tech"
+    },
+    {
+      id: 1234567891,
+      tiker: "GENM",
+      buyPrice: 102,
+      numShares: 5,
+      sector: "Energy"
     }
   ]
 
@@ -66,6 +74,7 @@ const App = () => {
           <Route path="/test" exact render={() => <Test />} />
           <Route path="/test/:id" component={TestDetail} />
           <Route path="/list/:id" component={StockDetail} />
+          <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList}  onRemove={removeStock} />} />
         </div>
       </Switch>
     </Router>

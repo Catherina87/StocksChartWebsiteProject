@@ -1,17 +1,18 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from '../image1.jpg';
+import { Link } from 'react-router-dom';
 
 export const Home = () => {
 
-  const categories = ['Tech', 'Finance', 'Bonds', 'Real Etate', 'Energy']
+  const categories = ['Tech', 'Finance', 'Bonds', 'Real Estate', 'Energy']
 
   return (
     <div>
-    <h1>Home Page</h1>
+    
     <div className="d-flex flex-row">
-      <div className="col-md-6 text-center">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, in!</p>
+      <div className="col-md-6 text-center mt2">
+        
         <img src={Image} className="img-fluid" alt="Responsive image"></img>
       </div>
 
@@ -23,7 +24,7 @@ export const Home = () => {
             <ListGroup.Item> 
               <div className="category-item">
                 <div>
-                  {category} 
+                  <Link to={`/category/${category}`}>{category}</Link>
                 </div>
                 <div>
                   %
