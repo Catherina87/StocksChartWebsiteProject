@@ -9,7 +9,6 @@ export const CustomNavbar = () => (
     <Nav className="mr-auto">
       <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link href="/list">My Stocks</Nav.Link>
-      <Nav.Link href="/add">Add Stock</Nav.Link>
     </Nav>
   </Navbar>
 )
