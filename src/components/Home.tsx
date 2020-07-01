@@ -1,6 +1,6 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Image from '../image1.jpg';
+import Image from '../images/image1.jpg';
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
