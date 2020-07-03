@@ -2,7 +2,6 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
 import { Chart } from './Chart';
-import isEmpty from 'lodash/isEmpty';
 import Stock from '../model/Stock';
 import { IndustrySector } from '../model/IndustrySector';
 
@@ -12,26 +11,17 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = (props) => {
 
-  const sectorToStockMap: { IndustrySector: Stock[] } | {} = props.stocksList.reduce((accum, stock) => {
-    if(isEmpty(accum[stock.sector])) {
-      accum[stock.sector] = [stock];
+  const sectorToStocksPriceMap: { IndustrySector: number } | {} = props.stocksList.reduce((accum, stock) => {
+    if(accum[stock.sector] === undefined) {
+      accum[stock.sector] = stock.buyPrice * stock.numShares;
     } else {
-      accum[stock.sector] = [...accum[stock.sector], stock];
+      accum[stock.sector] = accum[stock.sector] + stock.buyPrice * stock.numShares;
     }
 
     return accum;
   }, {});
-
-  console.log(sectorToStockMap);
-
-  const sectorToStocksPriceMap: { IndustrySector: number } | {} = Object.keys(sectorToStockMap).reduce((accum, sector) => {
-    const sectorStocks: Stock[] = sectorToStockMap[sector];
-    accum[sector] = sectorStocks.map(stock => stock.buyPrice * stock.numShares).reduce((accum, price) => accum + price, 0);
-
-    return accum;
-  }, {})
   
-  const userStocksSectors: IndustrySector[] = Object.keys(sectorToStockMap) as IndustrySector[];
+  const userStocksSectors: IndustrySector[] = Object.keys(sectorToStocksPriceMap) as IndustrySector[];
 
   return (
     <>

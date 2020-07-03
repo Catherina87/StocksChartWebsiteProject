@@ -43,6 +43,13 @@ const App = () => {
       },
       {
         id: uuidv4(),
+        tiker: "AAPL",
+        buyPrice: 235,
+        numShares: 3,
+        sector: "Tech"
+      },
+      {
+        id: uuidv4(),
         tiker: "GOOGL",
         buyPrice: 400,
         numShares: 2,

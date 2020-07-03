@@ -1,6 +1,5 @@
 import React from 'react'
 import { match } from 'react-router';
-import isEmpty from 'lodash/isEmpty';
 import { Chart } from './Chart';
 import Stock from '../model/Stock';
 
@@ -12,22 +11,14 @@ interface FilteredStocksProps {
 
 export const FilteredStocks = (props: FilteredStocksProps) => {
 
-  const filteredStocks = props.stocksList.filter((stock) => stock.sector === props.match.params.name);
+  const filteredStocks: Stock[] = props.stocksList.filter((stock) => stock.sector === props.match.params.name);
 
-  const tickerToPrices: { string: number[] } | {} = filteredStocks.reduce((accum, stock) => {
-    if(isEmpty(accum[stock.tiker])) {
-      accum[stock.tiker] = [stock.buyPrice * stock.numShares];
+  const tickerToTotalPrice: { string: number[] } | {} = filteredStocks.reduce((accum, stock) => {
+    if(accum[stock.tiker] === undefined) {
+      accum[stock.tiker] = stock.buyPrice * stock.numShares;
     } else {
-      accum[stock.tiker] = [...accum[stock.tiker], stock.buyPrice * stock.numShares];
+      accum[stock.tiker] = accum[stock.tiker] + (stock.buyPrice * stock.numShares);
     }
-
-    return accum;
-  }, {});
-
-  const tickerToTotalPrice: { string: number } | {} = Object.keys(tickerToPrices).reduce((accum, ticker) => {
-    const tickerPrices = tickerToPrices[ticker];
-
-    accum[ticker] = tickerPrices.reduce((accum, price) => accum + price, 0);
 
     return accum;
   }, {});
