@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Stock from './model/Stock';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import { Home } from './components/Home';
 import { CustomNavbar } from './components/CustomNavbar';
@@ -15,61 +17,64 @@ import { TestDetail } from './components/TestDetail'; // Remove later
 
 const App = () => {
 
-  const stocks = [
-    {
-      id: 1234567,
-      tiker: "AAPL",
-      buyPrice: 250,
-      numShares: 10,
-      sector: "Tech"
-    },
-    {
-      id: 12345678,
-      tiker: "GOOG",
-      buyPrice: 400,
-      numShares: 20,
-      sector: "Tech"
-    },
-    {
-      id: 123456789,
-      tiker: "MSFT",
-      buyPrice: 100.99,
-      numShares: 5,
-      sector: "Tech"
-    },
-    {
-      id: 1234567891,
-      tiker: "GENM",
-      buyPrice: 102,
-      numShares: 5,
-      sector: "Energy"
-    }
-  ]
+  const [stocksList, setStocksList] = useState<Stock[]>([]);
 
-  const [stocksList, setStocksList] = useState<Stock[]>(stocks);
+  useEffect(() => {
+    const retrievedStocks: Stock[] = fetchStocks();
+
+    setStocksList(retrievedStocks);
+  }, []);
 
   const addStock = (stock: Stock) => {
-    const newStock: Stock = {
-      id: Date.now(),
-      tiker: stock.tiker,
-      buyPrice: stock.buyPrice,
-      numShares: stock.numShares,
-      sector: stock.sector
-    }
-
-    setStocksList(prev => [newStock, ...prev])
+    // TODO: Add API call to add stock to DB
+    setStocksList(prev => [stock, ...prev])
   }
 
-  const removeStock = (id: number) => {
+  const removeStock = (id: string) => {
+    // TODO: Add API call to remove stock from DB
     setStocksList(prev => prev.filter(stockItem => stockItem.id !== id));
   }
+
+  const fetchStocks: () => Stock[] = () => {
+    // TODO: retrieve from API, currently hardcoded since backend is in progress
+    return [
+      {
+        id: uuidv4(),
+        tiker: "AAPL",
+        buyPrice: 250,
+        numShares: 5,
+        sector: "Tech"
+      },
+      {
+        id: uuidv4(),
+        tiker: "GOOGL",
+        buyPrice: 400,
+        numShares: 2,
+        sector: "Tech"
+      },
+      {
+        id: uuidv4(),
+        tiker: "NZL",
+        buyPrice: 100.99,
+        numShares: 5,
+        sector: "Real Estate"
+      },
+      {
+        id: uuidv4(),
+        tiker: "XOM",
+        buyPrice: 102,
+        numShares: 5,
+        sector: "Energy"
+      }
+    ]
+  };
 
   return <>
     <Router>
       <CustomNavbar />
       <Switch>
         <div className="container">
-          <Route path="/" exact render={() => <Home />} />
+          <Route path="/" exact render={() => <Home stocksList={stocksList} />} />
           <Route path="/add" render={() => <StockForm onAdd={addStock} />} />
           <Route path="/list" exact render={() => <StocksList stocksList={stocksList}  onRemove={removeStock} />} />
           <Route path="/test" exact render={() => <Test />} />

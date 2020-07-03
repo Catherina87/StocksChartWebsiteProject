@@ -1,7 +1,9 @@
+import { IndustrySector } from "./IndustrySector";
+
 export default interface Stock {
-  id: number
+  id: string
   tiker: string
   buyPrice: number
   numShares: number
-  sector: string
+  sector: IndustrySector
 }

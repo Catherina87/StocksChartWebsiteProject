@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stock from '../model/Stock';
+import { v4 as uuidv4 } from 'uuid';
+import { isEmpty } from 'lodash';
+import { AllIndustrySectors, IndustrySector } from '../model/IndustrySector'
 
 export const StockForm = (props) => {
 
   const [tiker, setTiker] = useState('');
   const [buyPrice, setBuyPrice] = useState(0);
   const [numShares, setNumShares] = useState(0);
-  const [sector, setSector] = useState('');
+  const [sector, setSector] = useState("Unknown" as IndustrySector);
 
   const tikerHandler = (event) => {
     setTiker(event.target.value)
@@ -30,7 +33,7 @@ export const StockForm = (props) => {
     event.preventDefault();
 
     const newStock: Stock = {
-      id: Date.now(), // maybe won't need it when I save to DB.
+      id: uuidv4(),
       tiker: tiker,
       buyPrice: buyPrice,
       numShares: numShares,
@@ -83,11 +86,7 @@ export const StockForm = (props) => {
           as="select"
           multiple
         >
-          <option>Real Estate</option>
-          <option>Bonds</option>
-          <option>Finance</option>
-          <option>Tech</option>
-          <option>Energy</option>
+          {AllIndustrySectors.map(sector => <option>{sector}</option>)}
         </Form.Control>
       </Form.Group>
 

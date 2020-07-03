@@ -1,38 +1,47 @@
 import React, { useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, ChartData } from 'react-chartjs-2';
+import ColorHash from 'color-hash';
+import 'chartjs-plugin-labels';
 
-export const Chart = () => {
+interface ChartProps {
+  labelsPriceMap: { string: number }
+};
 
-  // I might not even need state for the chart. All data about stocks will be passed via props.
-  // For now it's hardcoded.
-  const [chartData, setChartData] = useState({
-    labels: ['Finance', 'Tech', 'Energy', 'Bonds'],
+const ColorGenerator = new ColorHash();
+
+export const Chart: React.FC<ChartProps> = (props) => {
+
+  const datasets = {
+    labels: Object.keys(props.labelsPriceMap),
     datasets: [
       {
         label: 'Prices',
-        data: [
-          100,
-          300,
-          340,
-          600
-        ],
-        backgroundColor: [
-          'rgba(255, 99, 143, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(213, 184, 255, 0.6)'
-        ]
+        data: Object.values(props.labelsPriceMap),
+        backgroundColor: Object.keys(props.labelsPriceMap).map(label => ColorGenerator.hex(label))
       }
     ]
-  })
+  }
+
+  const chartOptions = { 
+    maintainAspectRatio: false,
+    plugins: {
+      labels: {
+        render: 'percentage',
+        fontSize: 18,
+        fontColor: '#000',
+        fontStyle: 'bold',
+        precision: 2
+      }
+    }
+  };
 
   return (
     <div className="chart">
       <Doughnut
-        data={chartData}
+        data={datasets}
         width={100}
         height={500}
-        options={{ maintainAspectRatio: false }}
+        options={chartOptions}
       />
     </div>
 

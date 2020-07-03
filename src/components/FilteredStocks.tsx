@@ -1,20 +1,47 @@
 import React from 'react'
+import { match } from 'react-router';
+import isEmpty from 'lodash/isEmpty';
 import { Chart } from './Chart';
+import Stock from '../model/Stock';
 
-export const FilteredStocks = ({ stocksList, onRemove, match }) => {
+interface FilteredStocksProps {
+  stocksList: Stock[],
+  onRemove: (id: string) => void,
+  match: match<any>,
+}
 
-  const filteredStocks = stocksList.filter((stock) => stock.sector === match.params.name) 
+export const FilteredStocks = (props: FilteredStocksProps) => {
+
+  const filteredStocks = props.stocksList.filter((stock) => stock.sector === props.match.params.name);
+
+  const tickerToPrices: { string: number[] } | {} = filteredStocks.reduce((accum, stock) => {
+    if(isEmpty(accum[stock.tiker])) {
+      accum[stock.tiker] = [stock.buyPrice * stock.numShares];
+    } else {
+      accum[stock.tiker] = [...accum[stock.tiker], stock.buyPrice * stock.numShares];
+    }
+
+    return accum;
+  }, {});
+
+  const tickerToTotalPrice: { string: number } | {} = Object.keys(tickerToPrices).reduce((accum, ticker) => {
+    const tickerPrices = tickerToPrices[ticker];
+
+    accum[ticker] = tickerPrices.reduce((accum, price) => accum + price, 0);
+
+    return accum;
+  }, {});
 
   return (
     <>
       <div className="d-flex flex-row">
         
         <div className="col-md-5 text-center mt2">
-          <Chart />
+          <Chart labelsPriceMap={tickerToTotalPrice as { string: number }} />
         </div>
 
         <div className="col-md-7 text-center">
-          <h3 className="mt2">{match.params.name} Stocks</h3>
+          <h3 className="mt2">{props.match.params.name} Stocks</h3>
           <table className="table">
             <thead className="thead-light">
               <tr>
@@ -35,7 +62,7 @@ export const FilteredStocks = ({ stocksList, onRemove, match }) => {
                       <button
                         className="btn btn-secondary btn-sm"
                         type="submit"
-                        onClick={() => onRemove(stock.id)}
+                        onClick={() => props.onRemove(stock.id)}
                       >
                        Remove
                       </button>

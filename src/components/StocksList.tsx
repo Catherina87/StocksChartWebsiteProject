@@ -10,7 +10,6 @@ export const StocksList = ({ stocksList, onRemove }) => {
       <table className="table">
         <thead className="thead-light">
           <tr>
-            <th>ID</th>
             <th>Tiker</th>
             <th>Buy Price</th>
             <th>Number of Shares</th>
@@ -22,7 +21,6 @@ export const StocksList = ({ stocksList, onRemove }) => {
           {stocksList.map((item) => {
             return (
               <tr>
-                <td>{item.id}</td>
                 <td>{item.tiker}</td>
                 <td>{item.buyPrice}</td>
                 <td>{item.numShares}</td>
