@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-
 export const Chart = () => {
 
   // I might not even need state for the chart. All data about stocks will be passed via props.
+  // For now it's hardcoded.
   const [chartData, setChartData] = useState({
     labels: ['Finance', 'Tech', 'Energy', 'Bonds'],
     datasets: [

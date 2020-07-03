@@ -37,8 +37,6 @@ export const StockForm = (props) => {
       sector: sector
     }
 
-    console.log(newStock);
-
     props.onAdd(newStock);
   }
 

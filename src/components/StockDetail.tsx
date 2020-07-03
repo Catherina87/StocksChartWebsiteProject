@@ -26,8 +26,6 @@ export const StockDetail: React.FC<IStockDetailProps> = (props) => {
     console.log('BYYEEE')
   }
 
-
-
   return (
     <div>
       <ul>

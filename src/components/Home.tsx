@@ -1,20 +1,17 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Image from '../images/image1.jpg';
 import { Link } from 'react-router-dom';
 import { Chart } from './Chart';
 
 export const Home = () => {
 
+  // For now all categories are hardcoded
   const categories = ['Tech', 'Finance', 'Bonds', 'Real Estate', 'Energy']
 
   return (
-    <div>
-      
+    <>
       <div className="d-flex flex-row">
         <div className="col-md-6 text-center mt2">
-          
-          {/* <img src={Image} className="img-fluid" alt="Responsive image"></img> */}
           <Chart />
         </div>
 
@@ -39,8 +36,7 @@ export const Home = () => {
 
           <Link to="/add" className="btn btn-outline-primary mt2">Add Stock</Link>
         </div>
-      
       </div>
-    </div>
+    </>
   );
 }

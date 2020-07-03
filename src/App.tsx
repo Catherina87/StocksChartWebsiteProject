@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import Stock from './model/Stock';
+
+import { Home } from './components/Home';
 import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
 import { StocksList } from './components/StocksList';
+import { FilteredStocks } from './components/FilteredStocks';
+import { StockDetail } from './components/StockDetail'; // might not need this one
+
 import { Test } from './components/Test'; // Remove later
 import { TestDetail } from './components/TestDetail'; // Remove later
-import Stock from './model/Stock';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { StockDetail } from './components/StockDetail';
-import { Home } from './components/Home';
-import { FilteredStocks } from './components/FilteredStocks';
-
 
 const App = () => {
 
@@ -55,8 +57,6 @@ const App = () => {
       sector: stock.sector
     }
 
-    console.log("In addStock");
-
     setStocksList(prev => [newStock, ...prev])
   }
 
@@ -79,7 +79,6 @@ const App = () => {
         </div>
       </Switch>
     </Router>
-    
   </>
 }
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from '../images/image3.jpg';
 import { Chart } from './Chart';
 
 export const FilteredStocks = ({ stocksList, onRemove, match }) => {
@@ -7,12 +6,10 @@ export const FilteredStocks = ({ stocksList, onRemove, match }) => {
   const filteredStocks = stocksList.filter((stock) => stock.sector === match.params.name) 
 
   return (
-    <div>
-      
+    <>
       <div className="d-flex flex-row">
+        
         <div className="col-md-5 text-center mt2">
-          
-          {/* <img src={Image} className="img-fluid" alt="Responsive image"></img> */}
           <Chart />
         </div>
 
@@ -51,7 +48,6 @@ export const FilteredStocks = ({ stocksList, onRemove, match }) => {
         </div>
       
       </div>
-    </div>
+    </>
   );
-  
 }
