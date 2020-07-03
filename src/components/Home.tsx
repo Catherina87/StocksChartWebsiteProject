@@ -2,6 +2,7 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from '../images/image1.jpg';
 import { Link } from 'react-router-dom';
+import { Chart } from './Chart';
 
 export const Home = () => {
 
@@ -13,11 +14,12 @@ export const Home = () => {
       <div className="d-flex flex-row">
         <div className="col-md-6 text-center mt2">
           
-          <img src={Image} className="img-fluid" alt="Responsive image"></img>
+          {/* <img src={Image} className="img-fluid" alt="Responsive image"></img> */}
+          <Chart />
         </div>
 
         <div className="col-md-6 text-center">
-          <h3>Industry Sectors</h3>
+          <h3 className="mt2">Industry Sectors</h3>
           <ListGroup className="mt2">
             {categories.map(category => {
               return (

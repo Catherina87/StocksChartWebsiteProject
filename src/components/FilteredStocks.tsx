@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from '../images/image3.jpg';
+import { Chart } from './Chart';
 
 export const FilteredStocks = ({ stocksList, onRemove, match }) => {
 
@@ -11,11 +12,12 @@ export const FilteredStocks = ({ stocksList, onRemove, match }) => {
       <div className="d-flex flex-row">
         <div className="col-md-5 text-center mt2">
           
-          <img src={Image} className="img-fluid" alt="Responsive image"></img>
+          {/* <img src={Image} className="img-fluid" alt="Responsive image"></img> */}
+          <Chart />
         </div>
 
         <div className="col-md-7 text-center">
-          <h3>{match.params.name} Stocks</h3>
+          <h3 className="mt2">{match.params.name} Stocks</h3>
           <table className="table">
             <thead className="thead-light">
               <tr>
@@ -34,7 +36,7 @@ export const FilteredStocks = ({ stocksList, onRemove, match }) => {
                     <td>{stock.numShares}</td>
                     <td>
                       <button
-                        className="btn btn-secondary"
+                        className="btn btn-secondary btn-sm"
                         type="submit"
                         onClick={() => onRemove(stock.id)}
                       >

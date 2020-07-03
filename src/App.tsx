@@ -10,6 +10,7 @@ import { StockDetail } from './components/StockDetail';
 import { Home } from './components/Home';
 import { FilteredStocks } from './components/FilteredStocks';
 
+
 const App = () => {
 
   const stocks = [

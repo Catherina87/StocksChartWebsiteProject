@@ -61,7 +61,7 @@ export const StocksList = ({ stocksList, onRemove }) => {
                 <td>
                 <button 
                   type="submit" 
-                  className="btn btn-outline-danger ml2"
+                  className="btn btn-outline-danger btn-sm"
                   onClick={() => onRemove(item.id)}
                 >
                   Remove Stock
