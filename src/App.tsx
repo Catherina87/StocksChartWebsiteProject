@@ -10,10 +10,6 @@ import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
 import { StocksList } from './components/StocksList';
 import { FilteredStocks } from './components/FilteredStocks';
-import { StockDetail } from './components/StockDetail'; // might not need this one
-
-import { Test } from './components/Test'; // Remove later
-import { TestDetail } from './components/TestDetail'; // Remove later
 
 const App = () => {
 
@@ -77,9 +73,6 @@ const App = () => {
           <Route path="/" exact render={() => <Home stocksList={stocksList} />} />
           <Route path="/add" render={() => <StockForm onAdd={addStock} />} />
           <Route path="/list" exact render={() => <StocksList stocksList={stocksList}  onRemove={removeStock} />} />
-          <Route path="/test" exact render={() => <Test />} />
-          <Route path="/test/:id" component={TestDetail} />
-          <Route path="/list/:id" component={StockDetail} />
           <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList}  onRemove={removeStock} />} />
         </div>
       </Switch>
