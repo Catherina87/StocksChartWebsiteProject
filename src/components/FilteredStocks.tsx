@@ -32,7 +32,7 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
         </div>
 
         <div className="col-md-7 text-center">
-          <h3 className="mt2">{props.match.params.name} Stocks</h3>
+          <h3 className="mt2 font-weight-light">{props.match.params.name} Stocks</h3>
           <table className="table">
             <thead className="thead-light">
               <tr>

@@ -31,20 +31,22 @@ export const Home: React.FC<HomeProps> = (props) => {
         </div>
 
         <div className="col-md-6 text-center">
-          <h3 className="mt2">Industry Sectors</h3>
+          <h3 className="mt2 font-weight-light">Industry Sectors</h3>
           <ListGroup className="mt2">
             {userStocksSectors.map(sector => {
               return (
-                <ListGroup.Item> 
+                <Link to={`/category/${sector}`} className="link">
+                <ListGroup.Item className="mt05"> 
                   <div className="category-item">
                     <div>
-                      <Link to={`/category/${sector}`}>{sector}</Link>
+                      <Link to={`/category/${sector}`} className="link">{sector}</Link>
                     </div>
                     <div>
                       $ {sectorToStocksPriceMap[sector]}
                     </div>
                   </div>
                 </ListGroup.Item>
+                </Link>
               )
             })}
           </ListGroup>

@@ -68,6 +68,13 @@ const App = () => {
         buyPrice: 102,
         numShares: 5,
         sector: "Energy"
+      },
+      {
+        id: uuidv4(),
+        tiker: "JPM",
+        buyPrice: 93,
+        numShares: 10,
+        sector: "Finance"
       }
     ]
   };

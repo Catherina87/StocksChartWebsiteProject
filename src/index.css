@@ -25,7 +25,19 @@ code {
   margin-left: 2rem;
 }
 
+.mt05 {
+  margin-top: 0.5rem;
+}
+
 .category-item {
   display: flex;
   justify-content: space-between;
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  text-decoration: none;
 }
