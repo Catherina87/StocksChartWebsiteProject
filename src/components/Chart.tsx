@@ -7,7 +7,7 @@ interface ChartProps {
   labelsPriceMap: { string: number }
 };
 
-const ColorGenerator = new ColorHash();
+const ColorGenerator = new ColorHash({saturation: 0.3, lightness: 0.6});
 
 export const Chart: React.FC<ChartProps> = (props) => {
 

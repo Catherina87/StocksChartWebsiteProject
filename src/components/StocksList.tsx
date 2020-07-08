@@ -12,7 +12,8 @@ export const StocksList = ({ stocksList, onRemove }) => {
           <tr>
             <th>Tiker</th>
             <th>Buy Price</th>
-            <th>Number of Shares</th>
+            <th>Num Shares</th>
+            <th>Total</th>
             <th>Sector</th>
             <th>Remove</th>
           </tr>
@@ -24,6 +25,7 @@ export const StocksList = ({ stocksList, onRemove }) => {
                 <td>{item.tiker}</td>
                 <td>{item.buyPrice}</td>
                 <td>{item.numShares}</td>
+                <td>{item.numShares * item.buyPrice}</td>
                 <td>{item.sector}</td>
                 <td>
                 <button 
