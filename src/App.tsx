@@ -15,6 +15,9 @@ const App = () => {
 
   const [stocksList, setStocksList] = useState<Stock[]>([]);
 
+  const [addFlashMessage, setAddFlashMessage] = useState('none');
+  const [removeFlashMessage, setRemoveFlashMessage] = useState('none');
+
   useEffect(() => {
     const retrievedStocks: Stock[] = fetchStocks();
 
@@ -24,11 +27,37 @@ const App = () => {
   const addStock = (stock: Stock) => {
     // TODO: Add API call to add stock to DB
     setStocksList(prev => [stock, ...prev])
+
+    // TODO: if stock was successfully added,
+    // setAddFlashMessage('success'), if not, set it to 'error'
+    // pass addFlashMessage as props to the StockForm component as well as
+    // updateAddFlashMessageStatus
+
+    // we can create updateAddFlashMessageStatus here:
+    // const updateAddFlashMessageStatus(statusPassed)
+    // setAddFlashMessage(statusPassed)
+  }
+
+  const updateAddFlashMessageStatus = (statusPassed) => {
+    setAddFlashMessage(statusPassed)
   }
 
   const removeStock = (id: string) => {
     // TODO: Add API call to remove stock from DB
     setStocksList(prev => prev.filter(stockItem => stockItem.id !== id));
+
+    // TODO: if stock was successfully deleted,
+    // setRemoveFlashMessage('success'), if not, set it to 'error'
+    // pass removeFlashMessage as props to StocksList and FilteredStocks components,
+    // as well as updateRemoveFlashMessageStatus
+
+    // we can create updateRemoveFlashMessageStatus here:
+    // const updateRemoveFlashMessageStatus(statusPassed)
+    // setRemoveFlashMessage(statusPassed)
+  }
+
+  const updateRemoveFlashMessageStatus = (statusPassed) => {
+    setRemoveFlashMessage(statusPassed)
   }
 
   const fetchStocks: () => Stock[] = () => {
@@ -85,9 +114,9 @@ const App = () => {
       <Switch>
         <div className="container">
           <Route path="/" exact render={() => <Home stocksList={stocksList} />} />
-          <Route path="/add" render={() => <StockForm onAdd={addStock} />} />
-          <Route path="/list" exact render={() => <StocksList stocksList={stocksList}  onRemove={removeStock} />} />
-          <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList}  onRemove={removeStock} />} />
+          <Route path="/add" render={() => <StockForm onAdd={addStock} addFlashMessage={addFlashMessage} updateAddFlashMessageStatus={updateAddFlashMessageStatus}/>} /> 
+          <Route path="/list" exact render={() => <StocksList stocksList={stocksList} onRemove={removeStock} removeFlashMessage={removeFlashMessage} updateRemoveFlashMessageStatus={updateRemoveFlashMessageStatus}/>} />
+          <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList} onRemove={removeStock} removeFlashMessage={removeFlashMessage} updateRemoveFlashMessageStatus={updateRemoveFlashMessageStatus}/>} />
         </div>
       </Switch>
     </Router>

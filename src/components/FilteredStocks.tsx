@@ -2,10 +2,13 @@ import React from 'react'
 import { match } from 'react-router';
 import { Chart } from './Chart';
 import Stock from '../model/Stock';
+import Alert from 'react-bootstrap/Alert'
 
 interface FilteredStocksProps {
   stocksList: Stock[],
   onRemove: (id: string) => void,
+  removeFlashMessage: string,
+  updateRemoveFlashMessageStatus: (status: string) => void,
   match: match<any>,
 }
 
@@ -23,8 +26,31 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
     return accum;
   }, {});
 
+  const renderFlashMessage = (variant, text) => {
+    return (
+      <Alert
+        variant={variant}
+        onClose={() => props.updateRemoveFlashMessageStatus('none')}
+        dismissible
+        className="mt2"
+      >
+        {text}
+      </Alert>
+    )
+  }
+
+  const displayFlashMessageStatus = (flashMessageStatusFromProps) => {
+    if (flashMessageStatusFromProps === 'success') {
+      return renderFlashMessage("success", "The stock has been successfully removed")
+    } else if (flashMessageStatusFromProps === 'error') {
+      return renderFlashMessage("danger", "Error happened! The stock was not removed")
+    }
+  }
+
   return (
     <>
+      {displayFlashMessageStatus(props.removeFlashMessage)}
+      
       <div className="d-flex flex-row">
         
         <div className="col-md-5 text-center mt2">
