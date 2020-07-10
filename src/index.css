@@ -41,3 +41,7 @@ code {
 .link:hover {
   text-decoration: none;
 }
+
+.error-msg {
+  color: red;
+}

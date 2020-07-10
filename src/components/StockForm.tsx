@@ -13,34 +13,102 @@ export const StockForm = (props) => {
   const [numShares, setNumShares] = useState(0);
   const [sector, setSector] = useState("Unknown" as IndustrySector);
 
-  const tikerHandler = (event) => {
-    setTiker(event.target.value)
+  const [tikerValid, setTikerValid] = useState(false);
+  const [buyPriceValid, setBuyPriceValid] = useState(false);
+  const [numSharesValid, setNumSharesValid] = useState(false);
+
+  const [errorMessages, setErrorMessages] = useState({});
+
+  const validateTiker = (newTicker: string) => {
+    let isValidTiker = true;
+    let errorMsgs = {...errorMessages};
+
+    if (newTicker.trim().length < 1) {
+      isValidTiker = false;
+      errorMsgs['tiker'] = 'Must be at least 1 character'
+    }
+
+    setTikerValid(isValidTiker);
+    setErrorMessages(errorMsgs);
+  }
+
+  const tikerHandler = (event) => { 
+    const newTicker = event.target.value;
+    
+    validateTiker(newTicker);
+    setTiker(newTicker);
+  }
+
+  const validateBuyPrice = (newBuyPrice: number) => {
+    let isValidBuyPrice = true;
+    let errorMsgs = {...errorMessages};
+
+    if (newBuyPrice <= 0) {
+      isValidBuyPrice = false;
+      errorMsgs['buyPrice'] = 'Cannot be less than or equal to 0';
+    } else if (isNaN(newBuyPrice)) {
+      isValidBuyPrice = false;
+      errorMsgs['buyPrice'] = 'Must be a number';
+    }
+
+    setBuyPriceValid(isValidBuyPrice);
+    setErrorMessages(errorMsgs);
   }
 
   const buyPriceHandler = (event) => {
-    setBuyPrice(event.target.value)
+    const newBuyPrice = event.target.value;
+
+    validateBuyPrice(newBuyPrice);
+    setBuyPrice(newBuyPrice);
+  }
+
+  const validateNumShares = (newNumShares: number) => {
+    let isValidNumShares = true;
+    let errorMsgs = {...errorMessages};
+
+    if (newNumShares < 1) {
+      isValidNumShares = false;
+      errorMsgs['numShares'] = 'Cannot be less than 1';
+    }
+
+    setNumSharesValid(isValidNumShares);
+    setErrorMessages(errorMsgs);
   }
 
   const numSharesHandler = (event) => {
-    setNumShares(event.target.value)
+    const newNumShares = event.target.value;
+
+    validateNumShares(newNumShares);
+    setNumShares(newNumShares);
   }
 
   const sectorHandler = (event) => {
     setSector(event.target.value)
   }
 
+  const isFormValid = () => {
+    
+    console.log('tikerValid = ', tikerValid);
+    console.log('buyPriceValid = ', buyPriceValid);
+    console.log('numSharesValid = ', numSharesValid);
+
+    return (tikerValid && buyPriceValid && numSharesValid);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const newStock: Stock = {
-      id: uuidv4(),
-      tiker: tiker,
-      buyPrice: buyPrice,
-      numShares: numShares,
-      sector: sector
+    if (isFormValid()) {
+      const newStock: Stock = {
+        id: uuidv4(),
+        tiker: tiker,
+        buyPrice: buyPrice,
+        numShares: numShares,
+        sector: sector
+      }
+  
+      props.onAdd(newStock);
     }
-
-    props.onAdd(newStock);
   }
 
   return (
@@ -54,6 +122,7 @@ export const StockForm = (props) => {
           type="string"
           placeholder="Stock Ticker"
         />
+        <ValidationMessage valid={tikerValid} message={errorMessages['tiker']} />
       </Form.Group>
 
       <Form.Group controlId="formBuyPrice">
@@ -65,6 +134,7 @@ export const StockForm = (props) => {
           type="number"
           placeholder="Buy Price"
         />
+        <ValidationMessage valid={buyPriceValid} message={errorMessages['buyPrice']} />
       </Form.Group>
 
       <Form.Group controlId="formNumShare">
@@ -76,6 +146,7 @@ export const StockForm = (props) => {
           type="number"
           placeholder="Number of Shares"
         />
+        <ValidationMessage valid={numSharesValid} message={errorMessages['numShares']} />
       </Form.Group>
 
       <Form.Group controlId="formSelectIndustrySector">
@@ -95,4 +166,16 @@ export const StockForm = (props) => {
       </Button>
     </Form>
   )
+}
+
+export const ValidationMessage = (props) => {
+  if (!props.valid) {
+    return (
+      <div className="error-msg">
+        {props.message}
+      </div>
+    )
+  }
+
+  return null;
 }
