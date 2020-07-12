@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stock from '../model/Stock';
 import { v4 as uuidv4 } from 'uuid';
-import { isEmpty } from 'lodash';
 import { AllIndustrySectors, IndustrySector } from '../model/IndustrySector'
 import Alert from 'react-bootstrap/Alert'
 
