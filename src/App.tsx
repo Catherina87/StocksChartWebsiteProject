@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import Stock from './model/Stock';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import { Home } from './components/Home';
 import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
@@ -22,13 +20,12 @@ const App = () => {
   const [removeFlashMessage, setRemoveFlashMessage] = useState('none');
 
   useEffect(() => {
-    const retrievedStocks: Stock[] = fetchStocks();
-
-    setStocksList(retrievedStocks);
+    fetchStocks();
+    console.log("Im called");
   }, []);
 
   const addStock = (stock: Stock) => {
-    // TODO: Add API call to add stock to DB - DONE!
+    // TODO: Change hardcoded userId once authentication is done
     axios.post(`${BASE_URL}stock/create`, {
       userId: "678",
       stock: stock
@@ -50,7 +47,19 @@ const App = () => {
 
   const removeStock = (id: string) => {
     // TODO: Add API call to remove stock from DB
-    setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+    axios.post(`${BASE_URL}stock/delete`, {
+      userId: "678",
+      tradeId: id 
+    })
+      .then(response => {
+        console.log(response);
+        setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+        setRemoveFlashMessage('success');
+      })
+      .catch(error => {
+        console.log("Error occured:", error);
+        setRemoveFlashMessage('error');
+      })
 
     // TODO: if stock was successfully deleted,
     // setRemoveFlashMessage('success'), if not, set it to 'error'
@@ -66,52 +75,19 @@ const App = () => {
     setRemoveFlashMessage(statusPassed)
   }
 
-  const fetchStocks: () => Stock[] = () => {
-    // TODO: retrieve from API, currently hardcoded since backend is in progress
-    return [
-      {
-        tradeId: uuidv4(),
-        tiker: "AAPL",
-        price: 250,
-        count: 5,
-        sector: "Tech"
-      },
-      {
-        tradeId: uuidv4(),
-        tiker: "AAPL",
-        price: 235,
-        count: 3,
-        sector: "Tech"
-      },
-      {
-        tradeId: uuidv4(),
-        tiker: "GOOGL",
-        price: 400,
-        count: 2,
-        sector: "Tech"
-      },
-      {
-        tradeId: uuidv4(),
-        tiker: "NZL",
-        price: 100.99,
-        count: 5,
-        sector: "Real Estate"
-      },
-      {
-        tradeId: uuidv4(),
-        tiker: "XOM",
-        price: 102,
-        count: 5,
-        sector: "Energy"
-      },
-      {
-        tradeId: uuidv4(),
-        tiker: "JPM",
-        price: 93,
-        count: 10,
-        sector: "Finance"
-      }
-    ]
+  const fetchStocks = () => {
+      // TODO: Change hardcoded userId once authentication is done
+    axios.post(`${BASE_URL}stock/list`, {
+      userId: "678"
+    })
+      .then(response => {
+        console.log(response);
+        const listOfStocks = response.data.items;
+        setStocksList(listOfStocks);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   };
 
   return <>

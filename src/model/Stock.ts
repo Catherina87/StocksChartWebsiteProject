@@ -2,7 +2,7 @@ import { IndustrySector } from "./IndustrySector";
 
 export default interface Stock {
   tradeId: string
-  tiker: string
+  ticker: string
   price: number
   count: number
   sector: IndustrySector

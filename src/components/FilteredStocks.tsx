@@ -17,10 +17,10 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
   const filteredStocks: Stock[] = props.stocksList.filter((stock) => stock.sector === props.match.params.name);
 
   const tickerToTotalPrice: { string: number[] } | {} = filteredStocks.reduce((accum, stock) => {
-    if(accum[stock.tiker] === undefined) {
-      accum[stock.tiker] = stock.price * stock.count;
+    if(accum[stock.ticker] === undefined) {
+      accum[stock.ticker] = stock.price * stock.count;
     } else {
-      accum[stock.tiker] = accum[stock.tiker] + (stock.price * stock.count);
+      accum[stock.ticker] = accum[stock.ticker] + (stock.price * stock.count);
     }
 
     return accum;
@@ -62,7 +62,7 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
           <table className="table">
             <thead className="thead-light">
               <tr>
-                <th>Tiker</th>
+                <th>Ticker</th>
                 <th>Buy Price</th>
                 <th>Num Shares</th>
                 <th>Remove</th>
@@ -72,7 +72,7 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
               {filteredStocks.map(stock => {
                 return (
                   <tr>
-                    <td>{stock.tiker}</td>
+                    <td>{stock.ticker}</td>
                     <td>{stock.price}</td>
                     <td>{stock.count}</td>
                     <td>

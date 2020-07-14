@@ -34,7 +34,7 @@ export const StocksList = ({ stocksList, onRemove, removeFlashMessage, updateRem
       <table className="table mt2">
         <thead className="thead-light">
           <tr>
-            <th>Tiker</th>
+            <th>Ticker</th>
             <th>Buy Price</th>
             <th>Num Shares</th>
             <th>Total</th>
@@ -46,7 +46,7 @@ export const StocksList = ({ stocksList, onRemove, removeFlashMessage, updateRem
           {stocksList.map((item) => {
             return (
               <tr>
-                <td>{item.tiker}</td>
+                <td>{item.ticker}</td>
                 <td>{item.price}</td>
                 <td>{item.count}</td>
                 <td>{item.count * item.price}</td>
@@ -55,7 +55,7 @@ export const StocksList = ({ stocksList, onRemove, removeFlashMessage, updateRem
                 <button 
                   type="submit" 
                   className="btn btn-outline-danger btn-sm"
-                  onClick={() => onRemove(item.id)}
+                  onClick={() => onRemove(item.tradeId)}
                 >
                   Remove Stock
                 </button>
