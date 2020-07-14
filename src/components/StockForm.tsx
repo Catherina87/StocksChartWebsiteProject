@@ -100,10 +100,10 @@ export const StockForm = (props) => {
 
     if (isFormValid()) {
       const newStock: Stock = {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: tiker,
-        buyPrice: buyPrice,
-        numShares: numShares,
+        price: buyPrice,
+        count: numShares,
         sector: sector
       }
   

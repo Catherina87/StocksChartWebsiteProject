@@ -47,9 +47,9 @@ export const StocksList = ({ stocksList, onRemove, removeFlashMessage, updateRem
             return (
               <tr>
                 <td>{item.tiker}</td>
-                <td>{item.buyPrice}</td>
-                <td>{item.numShares}</td>
-                <td>{item.numShares * item.buyPrice}</td>
+                <td>{item.price}</td>
+                <td>{item.count}</td>
+                <td>{item.count * item.price}</td>
                 <td>{item.sector}</td>
                 <td>
                 <button 

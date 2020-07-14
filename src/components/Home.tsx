@@ -13,9 +13,9 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   const sectorToStocksPriceMap: { IndustrySector: number } | {} = props.stocksList.reduce((accum, stock) => {
     if(accum[stock.sector] === undefined) {
-      accum[stock.sector] = stock.buyPrice * stock.numShares;
+      accum[stock.sector] = stock.price * stock.count;
     } else {
-      accum[stock.sector] = accum[stock.sector] + stock.buyPrice * stock.numShares;
+      accum[stock.sector] = accum[stock.sector] + stock.price * stock.count;
     }
 
     return accum;

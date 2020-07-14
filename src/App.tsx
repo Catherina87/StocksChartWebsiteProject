@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import Stock from './model/Stock';
 
@@ -10,6 +11,8 @@ import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
 import { StocksList } from './components/StocksList';
 import { FilteredStocks } from './components/FilteredStocks';
+
+const BASE_URL = "https://ou4tttbv6a.execute-api.us-west-2.amazonaws.com/prod/"
 
 const App = () => {
 
@@ -25,17 +28,20 @@ const App = () => {
   }, []);
 
   const addStock = (stock: Stock) => {
-    // TODO: Add API call to add stock to DB
-    setStocksList(prev => [stock, ...prev])
-
-    // TODO: if stock was successfully added,
-    // setAddFlashMessage('success'), if not, set it to 'error'
-    // pass addFlashMessage as props to the StockForm component as well as
-    // updateAddFlashMessageStatus
-
-    // we can create updateAddFlashMessageStatus here:
-    // const updateAddFlashMessageStatus(statusPassed)
-    // setAddFlashMessage(statusPassed)
+    // TODO: Add API call to add stock to DB - DONE!
+    axios.post(`${BASE_URL}stock/create`, {
+      userId: "678",
+      stock: stock
+    })
+      .then((response) => {
+        console.log(response);
+        setStocksList(prev => [stock, ...prev]);
+        setAddFlashMessage('success');
+      })
+      .catch((error) => {
+        console.log("Error occured:", error);
+        setAddFlashMessage('error');
+      })
   }
 
   const updateAddFlashMessageStatus = (statusPassed) => {
@@ -44,7 +50,7 @@ const App = () => {
 
   const removeStock = (id: string) => {
     // TODO: Add API call to remove stock from DB
-    setStocksList(prev => prev.filter(stockItem => stockItem.id !== id));
+    setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
 
     // TODO: if stock was successfully deleted,
     // setRemoveFlashMessage('success'), if not, set it to 'error'
@@ -64,45 +70,45 @@ const App = () => {
     // TODO: retrieve from API, currently hardcoded since backend is in progress
     return [
       {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: "AAPL",
-        buyPrice: 250,
-        numShares: 5,
+        price: 250,
+        count: 5,
         sector: "Tech"
       },
       {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: "AAPL",
-        buyPrice: 235,
-        numShares: 3,
+        price: 235,
+        count: 3,
         sector: "Tech"
       },
       {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: "GOOGL",
-        buyPrice: 400,
-        numShares: 2,
+        price: 400,
+        count: 2,
         sector: "Tech"
       },
       {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: "NZL",
-        buyPrice: 100.99,
-        numShares: 5,
+        price: 100.99,
+        count: 5,
         sector: "Real Estate"
       },
       {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: "XOM",
-        buyPrice: 102,
-        numShares: 5,
+        price: 102,
+        count: 5,
         sector: "Energy"
       },
       {
-        id: uuidv4(),
+        tradeId: uuidv4(),
         tiker: "JPM",
-        buyPrice: 93,
-        numShares: 10,
+        price: 93,
+        count: 10,
         sector: "Finance"
       }
     ]

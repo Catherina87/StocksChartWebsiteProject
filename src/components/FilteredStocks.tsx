@@ -18,9 +18,9 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
 
   const tickerToTotalPrice: { string: number[] } | {} = filteredStocks.reduce((accum, stock) => {
     if(accum[stock.tiker] === undefined) {
-      accum[stock.tiker] = stock.buyPrice * stock.numShares;
+      accum[stock.tiker] = stock.price * stock.count;
     } else {
-      accum[stock.tiker] = accum[stock.tiker] + (stock.buyPrice * stock.numShares);
+      accum[stock.tiker] = accum[stock.tiker] + (stock.price * stock.count);
     }
 
     return accum;
@@ -73,13 +73,13 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
                 return (
                   <tr>
                     <td>{stock.tiker}</td>
-                    <td>{stock.buyPrice}</td>
-                    <td>{stock.numShares}</td>
+                    <td>{stock.price}</td>
+                    <td>{stock.count}</td>
                     <td>
                       <button
                         className="btn btn-secondary btn-sm"
                         type="submit"
-                        onClick={() => props.onRemove(stock.id)}
+                        onClick={() => props.onRemove(stock.tradeId)}
                       >
                        Remove
                       </button>
