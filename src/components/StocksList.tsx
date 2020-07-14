@@ -49,7 +49,8 @@ export const StocksList = ({ stocksList, onRemove, removeFlashMessage, updateRem
                 <td>{item.ticker}</td>
                 <td>{item.price}</td>
                 <td>{item.count}</td>
-                <td>{item.count * item.price}</td>
+                <td>{Math.round((item.count * item.price + Number.EPSILON) * 100) / 100}</td>
+                
                 <td>{item.sector}</td>
                 <td>
                 <button 

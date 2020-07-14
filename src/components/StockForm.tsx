@@ -154,6 +154,7 @@ export const StockForm = (props) => {
           <Form.Control
             required
             min={1}
+            step="0.01"
             onChange={buyPriceHandler}
             type="number"
             placeholder="Buy Price"
