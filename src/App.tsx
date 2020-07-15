@@ -18,8 +18,7 @@ const App = () => {
 
   const [stocksList, setStocksList] = useState<Stock[]>([]);
 
-  const [addFlashMessage, setAddFlashMessage] = useState('none');
-  const [removeFlashMessage, setRemoveFlashMessage] = useState('none');
+  const [flashMessage, setFlashMessage] = useState('none');
 
   useEffect(() => {
     fetchStocks();
@@ -35,19 +34,19 @@ const App = () => {
     //   .then((response) => {
     //     console.log(response);
     //     setStocksList(prev => [stock, ...prev]);
-    //     setAddFlashMessage('success');
+    //     setFlashMessage('success');
     //   })
     //   .catch((error) => {
     //     console.log("Error occured:", error);
-    //     setAddFlashMessage('error');
+    //     setFlashMessage('error');
     //   })
 
       setStocksList(prev => [stock, ...prev]);
-      setAddFlashMessage('success');
+      setFlashMessage('success');
   }
 
-  const updateAddFlashMessageStatus = (statusPassed) => {
-    setAddFlashMessage(statusPassed)
+  const updateFlashMessageStatus = (statusPassed) => {
+    setFlashMessage(statusPassed)
   }
 
   const removeStock = (id: string) => {
@@ -59,19 +58,15 @@ const App = () => {
     //   .then(response => {
     //     console.log(response);
     //     setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-    //     setRemoveFlashMessage('success');
+    //     setFlashMessage('success');
     //   })
     //   .catch(error => {
     //     console.log("Error occured:", error);
-    //     setRemoveFlashMessage('error');
+    //     setFlashMessage('error');
     //   })
 
         setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-        setRemoveFlashMessage('success');
-  }
-
-  const updateRemoveFlashMessageStatus = (statusPassed) => {
-    setRemoveFlashMessage(statusPassed)
+        setFlashMessage('success');
   }
 
   const fetchStocks = () => {
@@ -142,9 +137,9 @@ const App = () => {
       <Switch>
         <div className="container">
           <Route path="/" exact render={() => <Home stocksList={stocksList} />} />
-          <Route path="/add" render={() => <StockForm onAdd={addStock} addFlashMessage={addFlashMessage} updateAddFlashMessageStatus={updateAddFlashMessageStatus}/>} /> 
-          <Route path="/list" exact render={() => <StocksList stocksList={stocksList} onRemove={removeStock} removeFlashMessage={removeFlashMessage} updateRemoveFlashMessageStatus={updateRemoveFlashMessageStatus}/>} />
-          <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList} onRemove={removeStock} removeFlashMessage={removeFlashMessage} updateRemoveFlashMessageStatus={updateRemoveFlashMessageStatus}/>} />
+          <Route path="/add" render={() => <StockForm onAdd={addStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} /> 
+          <Route path="/list" exact render={() => <StocksList stocksList={stocksList} onRemove={removeStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} />
+          <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList} onRemove={removeStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} />
         </div>
       </Switch>
     </Router>

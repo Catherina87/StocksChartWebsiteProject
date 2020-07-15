@@ -115,7 +115,7 @@ export const StockForm = (props) => {
     return (
       <Alert
         variant={variant}
-        onClose={() => props.updateAddFlashMessageStatus('none')}
+        onClose={() => props.updateFlashMessage('none')}
         dismissible
         className="mt2"
       >
@@ -134,7 +134,7 @@ export const StockForm = (props) => {
 
   return (
     <>
-      {displayFlashMessageStatus(props.addFlashMessage)}
+      {displayFlashMessageStatus(props.flashMessage)}
 
       <Form className="mt2" onSubmit={handleSubmit}>
         <Form.Group controlId="formStockTiker">

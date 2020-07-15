@@ -7,8 +7,8 @@ import Alert from 'react-bootstrap/Alert'
 interface FilteredStocksProps {
   stocksList: Stock[],
   onRemove: (id: string) => void,
-  removeFlashMessage: string,
-  updateRemoveFlashMessageStatus: (status: string) => void,
+  flashMessage: string,
+  updateFlashMessage: (status: string) => void,
   match: match<any>,
 }
 
@@ -30,7 +30,7 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
     return (
       <Alert
         variant={variant}
-        onClose={() => props.updateRemoveFlashMessageStatus('none')}
+        onClose={() => props.updateFlashMessage('none')}
         dismissible
         className="mt2"
       >
@@ -49,7 +49,7 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
 
   return (
     <>
-      {displayFlashMessageStatus(props.removeFlashMessage)}
+      {displayFlashMessageStatus(props.flashMessage)}
       
       <div className="d-flex flex-row">
         
