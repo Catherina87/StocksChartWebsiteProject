@@ -43,13 +43,13 @@ export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMess
           </tr>
         </thead>
         <tbody>
-          {stocksList.map((item) => {
+          {stocksList.map((item, i) => {
             return (
-              <tr>
+              <tr key={i}>
                 <td>{item.ticker}</td>
                 <td>{item.price}</td>
                 <td>{item.count}</td>
-                <td>{Math.round((item.count * item.price + Number.EPSILON) * 100) / 100}</td>
+                <td>{Math.round((item.count * item.price) * 100) / 100}</td>
                 
                 <td>{item.sector}</td>
                 <td>

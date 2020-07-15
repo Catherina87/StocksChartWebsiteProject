@@ -20,9 +20,10 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
     if(accum[stock.ticker] === undefined) {
       accum[stock.ticker] = stock.price * stock.count;
     } else {
-      accum[stock.ticker] = accum[stock.ticker] + (stock.price * stock.count);
+      accum[stock.ticker] = accum[stock.ticker] + stock.price * stock.count;
     }
 
+    accum[stock.ticker] = Math.round(accum[stock.ticker] * 100) / 100;
     return accum;
   }, {});
 
@@ -69,9 +70,9 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
               </tr>
             </thead>
             <tbody>
-              {filteredStocks.map(stock => {
+              {filteredStocks.map((stock, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>{stock.ticker}</td>
                     <td>{stock.price}</td>
                     <td>{stock.count}</td>

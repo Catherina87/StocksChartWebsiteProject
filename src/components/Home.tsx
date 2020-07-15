@@ -16,10 +16,14 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   const sectorToStocksPriceMap: { IndustrySector: number } | {} = props.stocksList.reduce((accum, stock) => {
     if(accum[stock.sector] === undefined) {
-      accum[stock.sector] = Math.round((stock.price * stock.count + Number.EPSILON) * 100) / 100;
+      accum[stock.sector] = stock.price * stock.count;
+      console.log("when accum undefined", accum[stock.sector])
     } else {
-      accum[stock.sector] = accum[stock.sector] + Math.round((stock.price * stock.count + Number.EPSILON) * 100) / 100;
+      accum[stock.sector] = accum[stock.sector] + stock.price * stock.count;
+      console.log("when accum is not undefined", accum[stock.sector])
     }
+
+    accum[stock.sector] = Math.round(accum[stock.sector] * 100) / 100;
 
     return accum;
   }, {});
@@ -56,19 +60,19 @@ export const Home: React.FC<HomeProps> = (props) => {
         <div className="col-md-6 text-center">
           <h3 className="mt2 font-weight-light">Industry Sectors</h3>
           <ListGroup className="mt2">
-            {userStocksSectors.map(sector => {
+            {userStocksSectors.map((sector, i) => {
               return (
-                <Link to={`/category/${sector}`} className="link">
-                <ListGroup.Item className="mt05"> 
-                  <div className="category-item">
-                    <div>
-                      <Link to={`/category/${sector}`} className="link">{sector}</Link>
+                <Link to={`/category/${sector}`} key={i} className="link">
+                  <ListGroup.Item className="mt05"> 
+                    <div className="category-item">
+                      <div>
+                        {sector}
+                      </div>
+                      <div>
+                        $ {sectorToStocksPriceMap[sector]}
+                      </div>
                     </div>
-                    <div>
-                      $ {sectorToStocksPriceMap[sector]}
-                    </div>
-                  </div>
-                </ListGroup.Item>
+                  </ListGroup.Item>
                 </Link>
               )
             })}
