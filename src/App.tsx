@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import Stock from './model/Stock';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { Home } from './components/Home';
 import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
@@ -26,19 +28,22 @@ const App = () => {
 
   const addStock = (stock: Stock) => {
     // TODO: Change hardcoded userId once authentication is done
-    axios.post(`${BASE_URL}stock/create`, {
-      userId: "678",
-      stock: stock
-    })
-      .then((response) => {
-        console.log(response);
-        setStocksList(prev => [stock, ...prev]);
-        setAddFlashMessage('success');
-      })
-      .catch((error) => {
-        console.log("Error occured:", error);
-        setAddFlashMessage('error');
-      })
+    // axios.post(`${BASE_URL}stock/create`, {
+    //   userId: "678",
+    //   stock: stock
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     setStocksList(prev => [stock, ...prev]);
+    //     setAddFlashMessage('success');
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error occured:", error);
+    //     setAddFlashMessage('error');
+    //   })
+
+      setStocksList(prev => [stock, ...prev]);
+      setAddFlashMessage('success');
   }
 
   const updateAddFlashMessageStatus = (statusPassed) => {
@@ -47,28 +52,22 @@ const App = () => {
 
   const removeStock = (id: string) => {
     // TODO: Add API call to remove stock from DB
-    axios.post(`${BASE_URL}stock/delete`, {
-      userId: "678",
-      tradeId: id 
-    })
-      .then(response => {
-        console.log(response);
+    // axios.post(`${BASE_URL}stock/delete`, {
+    //   userId: "678",
+    //   tradeId: id 
+    // })
+    //   .then(response => {
+    //     console.log(response);
+    //     setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+    //     setRemoveFlashMessage('success');
+    //   })
+    //   .catch(error => {
+    //     console.log("Error occured:", error);
+    //     setRemoveFlashMessage('error');
+    //   })
+
         setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
         setRemoveFlashMessage('success');
-      })
-      .catch(error => {
-        console.log("Error occured:", error);
-        setRemoveFlashMessage('error');
-      })
-
-    // TODO: if stock was successfully deleted,
-    // setRemoveFlashMessage('success'), if not, set it to 'error'
-    // pass removeFlashMessage as props to StocksList and FilteredStocks components,
-    // as well as updateRemoveFlashMessageStatus
-
-    // we can create updateRemoveFlashMessageStatus here:
-    // const updateRemoveFlashMessageStatus(statusPassed)
-    // setRemoveFlashMessage(statusPassed)
   }
 
   const updateRemoveFlashMessageStatus = (statusPassed) => {
@@ -77,17 +76,64 @@ const App = () => {
 
   const fetchStocks = () => {
       // TODO: Change hardcoded userId once authentication is done
-    axios.post(`${BASE_URL}stock/list`, {
-      userId: "678"
-    })
-      .then(response => {
-        console.log(response);
-        const listOfStocks = response.data.items;
-        setStocksList(listOfStocks);
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    // axios.post(`${BASE_URL}stock/list`, {
+    //   userId: "678"
+    // })
+    //   .then(response => {
+    //     console.log(response);
+    //     const listOfStocks = response.data.items;
+    //     setStocksList(listOfStocks);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
+
+    setStocksList(
+      [
+        {
+          tradeId: uuidv4(),
+          ticker: "AAPL",
+          price: 250,
+          count: 5,
+          sector: "Tech"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "AAPL",
+          price: 235,
+          count: 3,
+          sector: "Tech"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "GOOGL",
+          price: 400,
+          count: 2,
+          sector: "Tech"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "NZL",
+          price: 100.99,
+          count: 5,
+          sector: "Real Estate"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "XOM",
+          price: 102,
+          count: 5,
+          sector: "Energy"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "JPM",
+          price: 93,
+          count: 10,
+          sector: "Finance"
+        }
+      ]
+    );
   };
 
   return <>
