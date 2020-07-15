@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import { Chart } from './Chart';
 import Stock from '../model/Stock';
 import { IndustrySector } from '../model/IndustrySector';
+import Alert from 'react-bootstrap/Alert'
 
 interface HomeProps {
-  stocksList: Stock[]
+  stocksList: Stock[],
+  flashMessage: string,
+  updateFlashMessage: (status: string) => void
 };
 
 export const Home: React.FC<HomeProps> = (props) => {
@@ -23,8 +26,28 @@ export const Home: React.FC<HomeProps> = (props) => {
   
   const userStocksSectors: IndustrySector[] = Object.keys(sectorToStocksPriceMap) as IndustrySector[];
 
+  const renderFlashMessage = (variant, text) => {
+    return (
+      <Alert
+        variant={variant}
+        onClose={() => props.updateFlashMessage('none')}
+        dismissible
+        className="mt2"
+      >
+        {text}
+      </Alert>
+    )
+  }
+
+  const displayFlashMessageStatus = (flashMessageStatusFromProps) => {
+    if (flashMessageStatusFromProps === 'error') {
+      return renderFlashMessage("danger", "Error happened! The stock data was not uploaded")
+    }
+  }
+
   return (
     <>
+      {displayFlashMessageStatus(props.flashMessage)}
       <div className="d-flex flex-row">
         <div className="col-md-6 text-center mt2">
           <Chart labelsPriceMap={sectorToStocksPriceMap as { string: number }} />

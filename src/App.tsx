@@ -81,8 +81,9 @@ const App = () => {
     //   })
     //   .catch(error => {
     //     console.log(error);
+    //     setFlashMessage('error');
     //   })
-
+    
     setStocksList(
       [
         {
@@ -136,7 +137,7 @@ const App = () => {
       <CustomNavbar />
       <Switch>
         <div className="container">
-          <Route path="/" exact render={() => <Home stocksList={stocksList} />} />
+          <Route path="/" exact render={() => <Home stocksList={stocksList} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus} />} />
           <Route path="/add" render={() => <StockForm onAdd={addStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} /> 
           <Route path="/list" exact render={() => <StocksList stocksList={stocksList} onRemove={removeStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} />
           <Route path="/category/:name" render={(props) => <FilteredStocks match={props.match} stocksList={stocksList} onRemove={removeStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} />
