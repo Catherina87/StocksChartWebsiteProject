@@ -70,10 +70,3 @@ export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMess
     </>
   );
 }
-
-// TODO: need to show a flash message if the stock was successfully deleted
-// removeFlashMessage will be passed through props
-// create two methods renderFlashMesage and displayFlashMessageStatus
-// displayFlashMessageStatus takes removeFlashMessage prop and based on the status
-// calls renderFlashMesage to which it passes the variant and text that needs to display
-// also when you dismiss the flash message change the state to 'none'
