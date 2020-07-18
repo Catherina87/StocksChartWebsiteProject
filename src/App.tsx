@@ -4,7 +4,6 @@ import AppWithRouterAccess from './AppWithRouterAccess';
 
 
 const App = () => {
-  
   return (
     <Router>
       <AppWithRouterAccess/>

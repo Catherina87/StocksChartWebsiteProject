@@ -5,7 +5,7 @@ import { Navbar, Nav, Form, Button } from "react-bootstrap";
 export const CustomNavbar = () => {
   const { authState, authService } = useOktaAuth();
 
-  if ( authState.isPending ) {
+  if (authState.isPending) {
     return <div>Loading...</div>;
   }
 
@@ -16,14 +16,14 @@ export const CustomNavbar = () => {
 
   return (
     <Navbar bg="light" variant="light">
-      <Navbar.Brand href="/">Finance</Navbar.Brand>
+      <Navbar.Brand href="/">Stocks Portfolio</Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link href="/">Landing Page</Nav.Link>
+        <Nav.Link href="/home">Home</Nav.Link>
         <Nav.Link href="/list">My Stocks</Nav.Link>
       </Nav>
       <Form inline>
-            {button}
-          </Form>
+        {button}
+      </Form>
     </Navbar>
   )
 

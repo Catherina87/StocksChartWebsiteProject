@@ -20,11 +20,7 @@ import { FilteredStocks } from './components/FilteredStocks';
 const BASE_URL = "https://ou4tttbv6a.execute-api.us-west-2.amazonaws.com/prod/"
 
 const AppWithRouterAccess = () => {
-
   const history = useHistory();
-  const onAuthRequired = () => {
-    history.push("/login");
-  }
 
   // const baseDomain = process.env.REACT_APP_OKTA_URL_BASE;
   // console.log("base domain", baseDomain)
@@ -36,8 +32,6 @@ const AppWithRouterAccess = () => {
   const issuer = baseDomain + "/oauth2/default";
   const clientId = '0oal4f379DbiEvAbg4x6'
   const redirect = "http://localhost:3000/implicit/callback";
-  console.log("base domain", baseDomain)
-
 
   const [stocksList, setStocksList] = useState<Stock[]>([]);
 
@@ -45,7 +39,6 @@ const AppWithRouterAccess = () => {
 
   useEffect(() => {
     fetchStocks();
-    console.log("Im called");
   }, []);
 
   const addStock = (stock: Stock) => {
@@ -64,8 +57,8 @@ const AppWithRouterAccess = () => {
     //     setFlashMessage('error');
     //   })
 
-      setStocksList(prev => [stock, ...prev]);
-      setFlashMessage('success');
+    setStocksList(prev => [stock, ...prev]);
+    setFlashMessage('success');
   }
 
   const updateFlashMessageStatus = (statusPassed) => {
@@ -88,12 +81,12 @@ const AppWithRouterAccess = () => {
     //     setFlashMessage('error');
     //   })
 
-        setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-        setFlashMessage('success');
+    setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+    setFlashMessage('success');
   }
 
   const fetchStocks = () => {
-      // TODO: Change hardcoded userId once authentication is done
+    // TODO: Change hardcoded userId once authentication is done
     // axios.post(`${BASE_URL}stock/list`, {
     //   userId: "678"
     // })
@@ -106,7 +99,7 @@ const AppWithRouterAccess = () => {
     //     console.log(error);
     //     setFlashMessage('error');
     //   })
-    
+
     setStocksList(
       [
         {
@@ -165,46 +158,47 @@ const AppWithRouterAccess = () => {
 
   const StockFormPage = () => (
     <StockForm
-      onAdd={addStock} 
-      flashMessage={flashMessage} 
+      onAdd={addStock}
+      flashMessage={flashMessage}
       updateFlashMessage={updateFlashMessageStatus}
     />
   )
 
   const StocksListPage = () => (
-    <StocksList 
-      stocksList={stocksList} 
-      onRemove={removeStock} 
-      flashMessage={flashMessage} 
+    <StocksList
+      stocksList={stocksList}
+      onRemove={removeStock}
+      flashMessage={flashMessage}
       updateFlashMessage={updateFlashMessageStatus}
     />
   )
 
   const FilteredStocksPage = (props) => (
-    <FilteredStocks 
-      match={props.match} 
-      stocksList={stocksList} 
-      onRemove={removeStock} 
-      flashMessage={flashMessage} 
+    <FilteredStocks
+      match={props.match}
+      stocksList={stocksList}
+      onRemove={removeStock}
+      flashMessage={flashMessage}
       updateFlashMessage={updateFlashMessageStatus}
     />
   )
 
   return (
-
-    <Security issuer={issuer}
-                    clientId={clientId}
-                    redirectUri={redirect}
-                    onAuthRequired={onAuthRequired}
-                    pkce={true} >
+    <Security
+      issuer={issuer}
+      clientId={clientId}
+      redirectUri={redirect}
+      onAuthRequired={() => history.push("/login")}
+      pkce={true}
+    >
       <div className="container">
         <CustomNavbar />
-        <Route path="/" exact={true} component={LandingPape} />
         <SecureRoute path="/home" exact component={HomePage} />
-        <SecureRoute path="/add" exact component={StockFormPage} /> 
+        <SecureRoute path="/add" exact component={StockFormPage} />
         <SecureRoute path="/list" exact component={StocksListPage} />
         <SecureRoute path="/category/:name" exact component={FilteredStocksPage} />
 
+        <Route path="/" exact={true} component={LandingPape} />
         <Route path='/login' render={() => (<Login baseUrl={baseDomain} issuer={issuer} />)} />
         <Route path='/implicit/callback' component={LoginCallback} />
       </div>

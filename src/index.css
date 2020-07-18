@@ -45,3 +45,14 @@ code {
 .error-msg {
   color: red;
 }
+
+img {
+  opacity: 0.7;
+  height: 88vh;
+}
+
+.cont {
+  margin-top: 2rem;
+  background-image: url("./images/imageSeven.jpg");
+  
+}

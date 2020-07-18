@@ -13,11 +13,11 @@ const Login = ( { baseUrl, issuer } ) => {
   return authState.isAuthenticated ?
     <Redirect to={{ pathname: "/" }} /> :
 
-    <Container>
-      
+    <Container className="cont">
       <br></br>
       <h4>Please Login with your Okta Account</h4>
       <LoginForm baseUrl={baseUrl} issuer={issuer} />
+      <br></br>
     </Container>;
 };
 
