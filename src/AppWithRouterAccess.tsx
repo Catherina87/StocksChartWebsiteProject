@@ -155,6 +155,41 @@ const AppWithRouterAccess = () => {
     );
   };
 
+  const HomePage = () => (
+    <Home
+      stocksList={stocksList}
+      flashMessage={flashMessage}
+      updateFlashMessage={updateFlashMessageStatus}
+    />
+  );
+
+  const StockFormPage = () => (
+    <StockForm
+      onAdd={addStock} 
+      flashMessage={flashMessage} 
+      updateFlashMessage={updateFlashMessageStatus}
+    />
+  )
+
+  const StocksListPage = () => (
+    <StocksList 
+      stocksList={stocksList} 
+      onRemove={removeStock} 
+      flashMessage={flashMessage} 
+      updateFlashMessage={updateFlashMessageStatus}
+    />
+  )
+
+  const FilteredStocksPage = (props) => (
+    <FilteredStocks 
+      match={props.match} 
+      stocksList={stocksList} 
+      onRemove={removeStock} 
+      flashMessage={flashMessage} 
+      updateFlashMessage={updateFlashMessageStatus}
+    />
+  )
+
   return (
 
     <Security issuer={issuer}
@@ -165,10 +200,10 @@ const AppWithRouterAccess = () => {
       <div className="container">
         <CustomNavbar />
         <Route path="/" exact={true} component={LandingPape} />
-        <SecureRoute path="/home" exact render={() => <Home stocksList={stocksList} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus} />} />
-        <SecureRoute path="/add" exact render={() => <StockForm onAdd={addStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} /> 
-        <SecureRoute path="/list" exact render={() => <StocksList stocksList={stocksList} onRemove={removeStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} />
-        <SecureRoute path="/category/:name" exact render={(props) => <FilteredStocks match={props.match} stocksList={stocksList} onRemove={removeStock} flashMessage={flashMessage} updateFlashMessage={updateFlashMessageStatus}/>} />
+        <SecureRoute path="/home" exact component={HomePage} />
+        <SecureRoute path="/add" exact component={StockFormPage} /> 
+        <SecureRoute path="/list" exact component={StocksListPage} />
+        <SecureRoute path="/category/:name" exact component={FilteredStocksPage} />
 
         <Route path='/login' render={() => (<Login baseUrl={baseDomain} issuer={issuer} />)} />
         <Route path='/implicit/callback' component={LoginCallback} />

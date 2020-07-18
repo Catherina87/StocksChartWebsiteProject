@@ -2,6 +2,7 @@ import React from 'react'
 import Alert from 'react-bootstrap/Alert'
 
 export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMessage }) => {
+  console.log("stockslist is ", stocksList)
   if (stocksList.length === 0) {
     return <p className="font-weight-light mt2">No stocks added</p>
   }
