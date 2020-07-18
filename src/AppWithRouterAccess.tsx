@@ -30,8 +30,8 @@ const AppWithRouterAccess = () => {
 
   const baseDomain = 'https://dev-783003.okta.com'
   const issuer = baseDomain + "/oauth2/default";
-  const clientId = '0oal4f379DbiEvAbg4x6'
-  const redirect = "http://localhost:3000/implicit/callback";
+  const clientId = '0oal9hy0g0Vy4FDpB4x6'
+  const redirect = "http://stocks-portfolio-project-project.s3-website-us-west-2.amazonaws.com/implicit/callback";
 
   const [stocksList, setStocksList] = useState<Stock[]>([]);
 
@@ -189,7 +189,7 @@ const AppWithRouterAccess = () => {
       clientId={clientId}
       redirectUri={redirect}
       onAuthRequired={() => history.push("/login")}
-      pkce={true}
+      pkce={false}
     >
       <div className="container">
         <CustomNavbar />
