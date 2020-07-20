@@ -49,6 +49,7 @@ code {
 img {
   opacity: 0.7;
   height: 88vh;
+  object-fit: cover;
 }
 
 .cont {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Route, useHistory } from 'react-router-dom';
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+import isEmpty from "lodash/isEmpty";
 
 import axios from 'axios';
 
@@ -22,17 +23,15 @@ const BASE_URL = "https://ou4tttbv6a.execute-api.us-west-2.amazonaws.com/prod/"
 const AppWithRouterAccess = () => {
   const history = useHistory();
 
-  // const baseDomain = process.env.REACT_APP_OKTA_URL_BASE;
-  // console.log("base domain", baseDomain)
-  // const issuer = process.env.REACT_APP_OKTA_URL_BASE + "/oauth2/default";
-  // const clientId = process.env.REACT_APP_OKTA_CLIENTID;
-  // const redirect = process.env.REACT_APP_OKTA_APP_BASE_URL + "/implicit/callback";
-
   const baseDomain = 'https://dev-783003.okta.com'
   const issuer = baseDomain + "/oauth2/default";
+  // const clientId = '0oalkvobaecoqFZ5n4x6'
+  // const redirect = "http://localhost:3000/implicit/callback"
+
   const clientId = '0oal9hy0g0Vy4FDpB4x6'
   const redirect = "http://stocks-portfolio-project-project.s3-website-us-west-2.amazonaws.com/implicit/callback";
 
+  const [userId, setUserId] = useState<string>("");
   const [stocksList, setStocksList] = useState<Stock[]>([]);
 
   const [flashMessage, setFlashMessage] = useState('none');
@@ -42,23 +41,28 @@ const AppWithRouterAccess = () => {
   }, []);
 
   const addStock = (stock: Stock) => {
-    // TODO: Change hardcoded userId once authentication is done
-    // axios.post(`${BASE_URL}stock/create`, {
-    //   userId: "678",
-    //   stock: stock
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     setStocksList(prev => [stock, ...prev]);
-    //     setFlashMessage('success');
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error occured:", error);
-    //     setFlashMessage('error');
-    //   })
+    if (isEmpty(userId)) {
+      console.error("No user id found for addStock.");
+      return;
+    }
 
-    setStocksList(prev => [stock, ...prev]);
-    setFlashMessage('success');
+    // TODO: Change hardcoded userId once authentication is done
+    axios.post(`${BASE_URL}stock/create`, {
+      userId: userId,
+      stock: stock
+    })
+      .then((response) => {
+        console.log(response);
+        setStocksList(prev => [stock, ...prev]);
+        setFlashMessage('success');
+      })
+      .catch((error) => {
+        console.log("Error occured:", error);
+        setFlashMessage('error');
+      })
+
+    // setStocksList(prev => [stock, ...prev]);
+    // setFlashMessage('success');
   }
 
   const updateFlashMessageStatus = (statusPassed) => {
@@ -66,86 +70,96 @@ const AppWithRouterAccess = () => {
   }
 
   const removeStock = (id: string) => {
-    // TODO: Add API call to remove stock from DB
-    // axios.post(`${BASE_URL}stock/delete`, {
-    //   userId: "678",
-    //   tradeId: id 
-    // })
-    //   .then(response => {
-    //     console.log(response);
-    //     setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-    //     setFlashMessage('success');
-    //   })
-    //   .catch(error => {
-    //     console.log("Error occured:", error);
-    //     setFlashMessage('error');
-    //   })
+    if (isEmpty(userId)) {
+      console.error("No user id found for removeStock.");
+      return;
+    }
 
-    setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-    setFlashMessage('success');
+    // TODO: Add API call to remove stock from DB
+    axios.post(`${BASE_URL}stock/delete`, {
+      userId: userId,
+      tradeId: id
+    })
+      .then(response => {
+        console.log(response);
+        setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+        setFlashMessage('success');
+      })
+      .catch(error => {
+        console.log("Error occured:", error);
+        setFlashMessage('error');
+      })
+
+    // setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+    // setFlashMessage('success');
   }
 
   const fetchStocks = () => {
-    // TODO: Change hardcoded userId once authentication is done
-    // axios.post(`${BASE_URL}stock/list`, {
-    //   userId: "678"
-    // })
-    //   .then(response => {
-    //     console.log(response);
-    //     const listOfStocks = response.data.items;
-    //     setStocksList(listOfStocks);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     setFlashMessage('error');
-    //   })
+    if (isEmpty(userId)) {
+      console.error("No user id found for fetchStocks.");
+      return;
+    }
 
-    setStocksList(
-      [
-        {
-          tradeId: uuidv4(),
-          ticker: "AAPL",
-          price: 250,
-          count: 5,
-          sector: "Tech"
-        },
-        {
-          tradeId: uuidv4(),
-          ticker: "AAPL",
-          price: 235,
-          count: 3,
-          sector: "Tech"
-        },
-        {
-          tradeId: uuidv4(),
-          ticker: "GOOGL",
-          price: 400,
-          count: 2,
-          sector: "Tech"
-        },
-        {
-          tradeId: uuidv4(),
-          ticker: "NZL",
-          price: 100.99,
-          count: 5,
-          sector: "Real Estate"
-        },
-        {
-          tradeId: uuidv4(),
-          ticker: "XOM",
-          price: 102,
-          count: 5,
-          sector: "Energy"
-        },
-        {
-          tradeId: uuidv4(),
-          ticker: "JPM",
-          price: 93,
-          count: 10,
-          sector: "Finance"
-        }
-      ]
-    );
+    // TODO: Change hardcoded userId once authentication is done
+    axios.post(`${BASE_URL}stock/list`, {
+      userId: userId
+    })
+      .then(response => {
+        console.log(response);
+        const listOfStocks = response.data.items;
+        setStocksList(listOfStocks);
+      })
+      .catch(error => {
+        console.log(error);
+        setFlashMessage('error');
+      })
+
+    // setStocksList(
+    //   [
+    //     {
+    //       tradeId: uuidv4(),
+    //       ticker: "AAPL",
+    //       price: 250,
+    //       count: 5,
+    //       sector: "Tech"
+    //     },QAEngineer87
+    //     {
+    //       tradeId: uuidv4(),
+    //       ticker: "AAPL",
+    //       price: 235,
+    //       count: 3,
+    //       sector: "Tech"
+    //     },
+    //     {
+    //       tradeId: uuidv4(),
+    //       ticker: "GOOGL",
+    //       price: 400,
+    //       count: 2,
+    //       sector: "Tech"
+    //     },
+    //     {
+    //       tradeId: uuidv4(),
+    //       ticker: "NZL",
+    //       price: 100.99,
+    //       count: 5,
+    //       sector: "Real Estate"
+    //     },
+    //     {
+    //       tradeId: uuidv4(),
+    //       ticker: "XOM",
+    //       price: 102,
+    //       count: 5,
+    //       sector: "Energy"
+    //     },
+    //     {
+    //       tradeId: uuidv4(),
+    //       ticker: "JPM",
+    //       price: 93,
+    //       count: 10,
+    //       sector: "Finance"
+    //     }
+    //   ]
+    // );
   };
 
   const HomePage = () => (
@@ -199,7 +213,7 @@ const AppWithRouterAccess = () => {
         <SecureRoute path="/category/:name" exact component={FilteredStocksPage} />
 
         <Route path="/" exact={true} component={LandingPape} />
-        <Route path='/login' render={() => (<Login baseUrl={baseDomain} issuer={issuer} />)} />
+        <Route path='/login' render={() => (<Login setUser={setUserId} baseUrl={baseDomain} issuer={issuer} />)} />
         <Route path='/implicit/callback' component={LoginCallback} />
       </div>
     </Security>
