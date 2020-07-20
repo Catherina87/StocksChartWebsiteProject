@@ -37,7 +37,15 @@ const AppWithRouterAccess = () => {
   const [flashMessage, setFlashMessage] = useState('none');
 
   useEffect(() => {
-    fetchStocks();
+    let userIdFetched = "";
+    const userData = JSON.parse(localStorage.getItem("okta-token-storage") || "{}");
+    userIdFetched = userData?.idToken?.claims?.idp || "";
+    console.log("Current user id fetched is ", userIdFetched);
+
+    if (!isEmpty(userIdFetched)) {
+      setUserId(userIdFetched);
+      fetchStocks(userIdFetched);
+    }
   }, []);
 
   const addStock = (stock: Stock) => {
@@ -94,15 +102,15 @@ const AppWithRouterAccess = () => {
     // setFlashMessage('success');
   }
 
-  const fetchStocks = () => {
-    if (isEmpty(userId)) {
+  const fetchStocks = (fetchedUserId: string) => {
+    if (isEmpty(fetchedUserId)) {
       console.error("No user id found for fetchStocks.");
       return;
     }
 
     // TODO: Change hardcoded userId once authentication is done
     axios.post(`${BASE_URL}stock/list`, {
-      userId: userId
+      userId: fetchedUserId
     })
       .then(response => {
         console.log(response);
@@ -213,7 +221,7 @@ const AppWithRouterAccess = () => {
         <SecureRoute path="/category/:name" exact component={FilteredStocksPage} />
 
         <Route path="/" exact={true} component={LandingPape} />
-        <Route path='/login' render={() => (<Login setUser={setUserId} baseUrl={baseDomain} issuer={issuer} />)} />
+        <Route path='/login' render={() => (<Login baseUrl={baseDomain} issuer={issuer} />)} />
         <Route path='/implicit/callback' component={LoginCallback} />
       </div>
     </Security>
