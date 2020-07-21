@@ -36,31 +36,31 @@ const StockOverview = (props: StockOverviewProps) => {
   
   const getOverviewFor = (symbol: string) => {
     const ApiKey = 'KX528B0LJ31J9I0A'
-    // axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${ApiKey}`)
-    // .then(response => {
-    //   console.log("RESPONSE ", response);
+    axios.get(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${ApiKey}`)
+    .then(response => {
+      console.log("RESPONSE ", response);
 
-    //   if (response.data !== undefined || response.data !== {}) {
-    //     setData({
-    //       symbol: response.data.Symbol,
-    //       name: response.data.Name,
-    //       assetType: response.data.AssetType,
-    //       currency: response.data.Currency,
-    //       country: response.data.Country,
-    //       sector: response.data.Sector,
-    //       industry: response.data.Industry,
-    //       address: response.data.Address,
-    //       dividendPerShare: response.data.DividendPerShare,
-    //       weekHigh52: response.data["52WeekHigh"],
-    //       weekLow52: response.data["52WeekLow"],
-    //       dayMovingAverage50: response.data["50DayMovingAverage"],
-    //       description: response.data.Description
-    //     });
-    //   }
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    // })
+      if (response.data !== undefined || response.data !== {}) {
+        setData({
+          symbol: response.data.Symbol,
+          name: response.data.Name,
+          assetType: response.data.AssetType,
+          currency: response.data.Currency,
+          country: response.data.Country,
+          sector: response.data.Sector,
+          industry: response.data.Industry,
+          address: response.data.Address,
+          dividendPerShare: response.data.DividendPerShare,
+          weekHigh52: response.data["52WeekHigh"],
+          weekLow52: response.data["52WeekLow"],
+          dayMovingAverage50: response.data["50DayMovingAverage"],
+          description: response.data.Description
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
   return (
