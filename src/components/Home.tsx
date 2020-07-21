@@ -78,7 +78,7 @@ export const Home: React.FC<HomeProps> = (props) => {
             })}
           </ListGroup>
 
-          <Link to="/add" className="btn btn-outline-primary mt2">Add Stock</Link>
+          <Link to="/add" className="btn btn-outline-info mt2">Add Stock</Link>
         </div>
       </div>
     </>

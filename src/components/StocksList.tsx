@@ -33,8 +33,8 @@ export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMess
     <>
       {displayFlashMessageStatus(flashMessage)}
 
-      <table className="table mt2">
-        <thead className="thead-light">
+      <table className="table table-borderless table-hover mt2">
+        <thead className="thead">
           <tr>
             <th>Ticker</th>
             <th>Buy Price</th>
@@ -58,7 +58,7 @@ export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMess
                 <td>
                 <button 
                   type="submit" 
-                  className="btn btn-outline-danger btn-sm"
+                  className="btn btn-outline-info btn-sm"
                   onClick={() => onRemove(item.tradeId)}
                 >
                   Remove Stock

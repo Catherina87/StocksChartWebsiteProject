@@ -186,7 +186,7 @@ export const StockForm = (props) => {
           </Form.Control>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           Add Stock
         </Button>
       </Form>

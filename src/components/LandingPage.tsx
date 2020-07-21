@@ -31,7 +31,7 @@ const LandingPage = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={require('../images/imageEleven.jpg')}
+          src={require('../images/image2.jpg')}
           alt="Third slide"
         />
 

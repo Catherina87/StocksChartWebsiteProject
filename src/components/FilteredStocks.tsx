@@ -60,8 +60,8 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
 
         <div className="col-md-7 text-center">
           <h3 className="mt2 font-weight-light">{props.match.params.name} Stocks</h3>
-          <table className="table">
-            <thead className="thead-light">
+          <table className="table table-borderless">
+            <thead className="thead">
               <tr>
                 <th>Ticker</th>
                 <th>Buy Price</th>
@@ -78,7 +78,7 @@ export const FilteredStocks = (props: FilteredStocksProps) => {
                     <td>{stock.count}</td>
                     <td>
                       <button
-                        className="btn btn-secondary btn-sm"
+                        className="btn btn-outline-info btn-sm"
                         type="submit"
                         onClick={() => props.onRemove(stock.tradeId)}
                       >
