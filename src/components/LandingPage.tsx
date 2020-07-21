@@ -25,7 +25,7 @@ const LandingPage = () => {
 
       <Carousel.Caption>
         <h3>Visualize Data</h3>
-        <p>Vizual preview helps to make smart investment decisions</p>
+        <p>Visual preview helps to make smart investment decisions</p>
       </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -36,8 +36,8 @@ const LandingPage = () => {
         />
 
       <Carousel.Caption>
-        <h3>Protect Data</h3>
-        <p>StocksPortfolio helps you protect your data using reliable Okta authentication platform</p>
+        <h3>Manage Data</h3>
+        <p>Update your stocks portfolio with every investment</p>
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Alert from 'react-bootstrap/Alert'
+import { Link } from 'react-router-dom';
 
 export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMessage }) => {
   console.log("stockslist is ", stocksList)
@@ -46,8 +47,9 @@ export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMess
         <tbody>
           {stocksList.map((item, i) => {
             return (
+              
               <tr key={i}>
-                <td>{item.ticker}</td>
+                <Link to={`/overview/${item.ticker}`} key={i} className="link"><td>{item.ticker}</td></Link>
                 <td>{item.price}</td>
                 <td>{item.count}</td>
                 <td>{Math.round((item.count * item.price) * 100) / 100}</td>
@@ -63,6 +65,7 @@ export const StocksList = ({ stocksList, onRemove, flashMessage, updateFlashMess
                 </button>
                 </td>
               </tr>
+              
             )
           }
           )}

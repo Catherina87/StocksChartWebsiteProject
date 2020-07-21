@@ -17,6 +17,7 @@ import { CustomNavbar } from './components/CustomNavbar';
 import { StockForm } from './components/StockForm';
 import { StocksList } from './components/StocksList';
 import { FilteredStocks } from './components/FilteredStocks';
+import StockOverview from './components/StockOverview';
 
 const BASE_URL = "https://ou4tttbv6a.execute-api.us-west-2.amazonaws.com/prod/"
 
@@ -25,11 +26,11 @@ const AppWithRouterAccess = () => {
 
   const baseDomain = 'https://dev-783003.okta.com'
   const issuer = baseDomain + "/oauth2/default";
-  // const clientId = '0oalkvobaecoqFZ5n4x6'
-  // const redirect = "http://localhost:3000/implicit/callback"
+  const clientId = '0oalkvobaecoqFZ5n4x6'
+  const redirect = "http://localhost:3000/implicit/callback"
 
-  const clientId = '0oal9hy0g0Vy4FDpB4x6'
-  const redirect = "http://stocks-portfolio-project-project.s3-website-us-west-2.amazonaws.com/implicit/callback";
+  // const clientId = '0oal9hy0g0Vy4FDpB4x6'
+  // const redirect = "http://stocks-portfolio-project-project.s3-website-us-west-2.amazonaws.com/implicit/callback";
 
   const [userId, setUserId] = useState<string>("");
   const [stocksList, setStocksList] = useState<Stock[]>([]);
@@ -44,7 +45,8 @@ const AppWithRouterAccess = () => {
 
     if (!isEmpty(userIdFetched)) {
       setUserId(userIdFetched);
-      fetchStocks(userIdFetched);
+      // fetchStocks(userIdFetched);
+      fetchStocks("678");
     }
   }, []);
 
@@ -55,22 +57,22 @@ const AppWithRouterAccess = () => {
     }
 
     // TODO: Change hardcoded userId once authentication is done
-    axios.post(`${BASE_URL}stock/create`, {
-      userId: userId,
-      stock: stock
-    })
-      .then((response) => {
-        console.log(response);
-        setStocksList(prev => [stock, ...prev]);
-        setFlashMessage('success');
-      })
-      .catch((error) => {
-        console.log("Error occured:", error);
-        setFlashMessage('error');
-      })
+    // axios.post(`${BASE_URL}stock/create`, {
+    //   userId: userId,
+    //   stock: stock
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     setStocksList(prev => [stock, ...prev]);
+    //     setFlashMessage('success');
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error occured:", error);
+    //     setFlashMessage('error');
+    //   })
 
-    // setStocksList(prev => [stock, ...prev]);
-    // setFlashMessage('success');
+    setStocksList(prev => [stock, ...prev]);
+    setFlashMessage('success');
   }
 
   const updateFlashMessageStatus = (statusPassed) => {
@@ -84,22 +86,22 @@ const AppWithRouterAccess = () => {
     }
 
     // TODO: Add API call to remove stock from DB
-    axios.post(`${BASE_URL}stock/delete`, {
-      userId: userId,
-      tradeId: id
-    })
-      .then(response => {
-        console.log(response);
-        setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-        setFlashMessage('success');
-      })
-      .catch(error => {
-        console.log("Error occured:", error);
-        setFlashMessage('error');
-      })
+    // axios.post(`${BASE_URL}stock/delete`, {
+    //   userId: userId,
+    //   tradeId: id
+    // })
+    //   .then(response => {
+    //     console.log(response);
+    //     setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+    //     setFlashMessage('success');
+    //   })
+    //   .catch(error => {
+    //     console.log("Error occured:", error);
+    //     setFlashMessage('error');
+    //   })
 
-    // setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
-    // setFlashMessage('success');
+    setStocksList(prev => prev.filter(stockItem => stockItem.tradeId !== id));
+    setFlashMessage('success');
   }
 
   const fetchStocks = (fetchedUserId: string) => {
@@ -109,65 +111,65 @@ const AppWithRouterAccess = () => {
     }
 
     // TODO: Change hardcoded userId once authentication is done
-    axios.post(`${BASE_URL}stock/list`, {
-      userId: fetchedUserId
-    })
-      .then(response => {
-        console.log(response);
-        const listOfStocks = response.data.items;
-        setStocksList(listOfStocks);
-      })
-      .catch(error => {
-        console.log(error);
-        setFlashMessage('error');
-      })
+    // axios.post(`${BASE_URL}stock/list`, {
+    //   userId: fetchedUserId
+    // })
+    //   .then(response => {
+    //     console.log(response);
+    //     const listOfStocks = response.data.items;
+    //     setStocksList(listOfStocks);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     setFlashMessage('error');
+    //   })
 
-    // setStocksList(
-    //   [
-    //     {
-    //       tradeId: uuidv4(),
-    //       ticker: "AAPL",
-    //       price: 250,
-    //       count: 5,
-    //       sector: "Tech"
-    //     },QAEngineer87
-    //     {
-    //       tradeId: uuidv4(),
-    //       ticker: "AAPL",
-    //       price: 235,
-    //       count: 3,
-    //       sector: "Tech"
-    //     },
-    //     {
-    //       tradeId: uuidv4(),
-    //       ticker: "GOOGL",
-    //       price: 400,
-    //       count: 2,
-    //       sector: "Tech"
-    //     },
-    //     {
-    //       tradeId: uuidv4(),
-    //       ticker: "NZL",
-    //       price: 100.99,
-    //       count: 5,
-    //       sector: "Real Estate"
-    //     },
-    //     {
-    //       tradeId: uuidv4(),
-    //       ticker: "XOM",
-    //       price: 102,
-    //       count: 5,
-    //       sector: "Energy"
-    //     },
-    //     {
-    //       tradeId: uuidv4(),
-    //       ticker: "JPM",
-    //       price: 93,
-    //       count: 10,
-    //       sector: "Finance"
-    //     }
-    //   ]
-    // );
+    setStocksList(
+      [
+        {
+          tradeId: uuidv4(),
+          ticker: "AAPL",
+          price: 250,
+          count: 5,
+          sector: "Tech"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "AAPL",
+          price: 235,
+          count: 3,
+          sector: "Tech"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "GOOGL",
+          price: 400,
+          count: 2,
+          sector: "Tech"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "NZL",
+          price: 100.99,
+          count: 5,
+          sector: "Real Estate"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "XOM",
+          price: 102,
+          count: 5,
+          sector: "Energy"
+        },
+        {
+          tradeId: uuidv4(),
+          ticker: "JPM",
+          price: 93,
+          count: 10,
+          sector: "Finance"
+        }
+      ]
+    );
   };
 
   const HomePage = () => (
@@ -205,6 +207,13 @@ const AppWithRouterAccess = () => {
     />
   )
 
+  const StockOverviewPage = (props) => (
+    <StockOverview 
+      match={props.match} 
+    />
+  )
+    
+
   return (
     <Security
       issuer={issuer}
@@ -223,6 +232,7 @@ const AppWithRouterAccess = () => {
         <Route path="/" exact={true} component={LandingPape} />
         <Route path='/login' render={() => (<Login baseUrl={baseDomain} issuer={issuer} />)} />
         <Route path='/implicit/callback' component={LoginCallback} />
+        <Route path="/overview/:symbol" exact={true} component={StockOverviewPage} />
       </div>
     </Security>
   )
