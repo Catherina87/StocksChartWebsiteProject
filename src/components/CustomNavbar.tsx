@@ -10,8 +10,8 @@ export const CustomNavbar = () => {
   }
 
   const button = authState.isAuthenticated ?
-    <Button variant="secondary" onClick={() => { authService.logout(); }}>Logout</Button> :
-    <Button variant="secondary" onClick={() => { authService.login(); }}>Login</Button>;
+    <Button variant="secondary" onClick={() => { authService.logout(); }}>Log out</Button> :
+    <Button variant="secondary" onClick={() => { authService.login(); }}>Log in</Button>;
 
 
   return (

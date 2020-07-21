@@ -16,7 +16,7 @@ const Login = ( { baseUrl, issuer } ) => {
 
     <Container className="jumbotron mt2">
       <br></br>
-      <h4 className="mb2">Please Login with your Okta Account</h4>
+      <h4 className="mb2">Please Log in with your Okta Account</h4>
       <LoginForm baseUrl={baseUrl} issuer={issuer} />
       <br></br>
     </Container>;

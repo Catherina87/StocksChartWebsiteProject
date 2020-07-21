@@ -49,7 +49,7 @@ const LoginForm = ( { baseUrl, issuer } ) => {
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Login
+            Log in
           </Button>
 
         </Form>
