@@ -2,11 +2,19 @@ import React from 'react'
 import { useOktaAuth } from "@okta/okta-react";
 import { Navbar, Nav, Form, Button } from "react-bootstrap";
 
-export const CustomNavbar = () => {
+export const CustomNavbar = ( { updateUserInfo } ) => {
   const { authState, authService } = useOktaAuth();
 
   if (authState.isPending) {
     return <div>Loading...</div>;
+  }
+
+  if (authState.accessToken) {
+    authService.getUser()
+    .then((info) => {
+      updateUserInfo(info.sub);
+      console.log("USER INFO = ", info);
+    })
   }
 
   const button = authState.isAuthenticated ?
@@ -26,7 +34,6 @@ export const CustomNavbar = () => {
       </Form>
     </Navbar>
   )
-
 };
 
 

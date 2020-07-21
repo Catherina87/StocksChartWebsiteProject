@@ -5,7 +5,7 @@ import { useOktaAuth } from "@okta/okta-react";
 import { Container } from "react-bootstrap";
 
 const Login = ( { baseUrl, issuer } ) => {
-  const { authState } = useOktaAuth();
+  const { authState} = useOktaAuth();
 
   if ( authState.isPending ) {
     return <div>Loading...</div>;

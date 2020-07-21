@@ -24,6 +24,13 @@ const BASE_URL = "https://ou4tttbv6a.execute-api.us-west-2.amazonaws.com/prod/"
 const AppWithRouterAccess = () => {
   const history = useHistory();
 
+  const [userInfo, setUserInfo] = useState<string>("");
+
+  const updateUserInfo = (uniqId: string) => {
+    setUserInfo(uniqId);
+    console.log("Passed USER ID IS: ", uniqId);
+  }
+
   const baseDomain = 'https://dev-783003.okta.com'
   const issuer = baseDomain + "/oauth2/default";
   // const clientId = '0oalkvobaecoqFZ5n4x6'
@@ -32,33 +39,41 @@ const AppWithRouterAccess = () => {
   const clientId = '0oal9hy0g0Vy4FDpB4x6'
   const redirect = "http://stocks-portfolio-project-project.s3-website-us-west-2.amazonaws.com/implicit/callback";
 
-  const [userId, setUserId] = useState<string>("");
+  // const [userId, setUserId] = useState<string>("");
   const [stocksList, setStocksList] = useState<Stock[]>([]);
 
   const [flashMessage, setFlashMessage] = useState('none');
 
   useEffect(() => {
-    let userIdFetched = "";
-    const userData = JSON.parse(localStorage.getItem("okta-token-storage") || "{}");
-    userIdFetched = userData?.idToken?.claims?.idp || "";
-    console.log("Current user id fetched is ", userIdFetched);
+    // let userIdFetched = "";
+    // const userData = JSON.parse(localStorage.getItem("okta-token-storage") || "{}");
+    // userIdFetched = userData?.idToken?.claims?.idp || "";
+    // console.log("Current user id fetched is ", userIdFetched);
 
-    if (!isEmpty(userIdFetched)) {
-      setUserId(userIdFetched);
-      fetchStocks(userIdFetched);
-      // fetchStocks("678");
+    // if (!isEmpty(userIdFetched)) {
+    //   setUserId(userIdFetched);
+    //   // fetchStocks(userIdFetched);
+    //   // fetchStocks("678");
+    // }
+
+
+    if (!isEmpty(userInfo)) {
+      console.log("USER INFO IN useEffect = ", userInfo);
+      fetchStocks(userInfo!);
+    } else {
+      console.log("USER INFO in useEffect is empty")
     }
-  }, []);
+  }, [userInfo]);
 
   const addStock = (stock: Stock) => {
-    if (isEmpty(userId)) {
+    if (isEmpty(userInfo)) {
       console.error("No user id found for addStock.");
       return;
     }
 
     // TODO: Change hardcoded userId once authentication is done
     axios.post(`${BASE_URL}stock/create`, {
-      userId: userId,
+      userId: userInfo,
       stock: stock
     })
       .then((response) => {
@@ -80,14 +95,14 @@ const AppWithRouterAccess = () => {
   }
 
   const removeStock = (id: string) => {
-    if (isEmpty(userId)) {
+    if (isEmpty(userInfo)) {
       console.error("No user id found for removeStock.");
       return;
     }
 
     // TODO: Add API call to remove stock from DB
     axios.post(`${BASE_URL}stock/delete`, {
-      userId: userId,
+      userId: userInfo,
       tradeId: id
     })
       .then(response => {
@@ -208,11 +223,11 @@ const AppWithRouterAccess = () => {
   )
 
   const StockOverviewPage = (props) => (
-    <StockOverview 
-      match={props.match} 
+    <StockOverview
+      match={props.match}
     />
   )
-    
+
 
   return (
     <Security
@@ -223,7 +238,7 @@ const AppWithRouterAccess = () => {
       pkce={false}
     >
       <div className="container">
-        <CustomNavbar />
+        <CustomNavbar updateUserInfo={updateUserInfo} />
         <SecureRoute path="/home" exact component={HomePage} />
         <SecureRoute path="/add" exact component={StockFormPage} />
         <SecureRoute path="/list" exact component={StocksListPage} />
